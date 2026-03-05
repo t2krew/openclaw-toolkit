@@ -1,4 +1,98 @@
-# 维护工具 (Maintenance Tools)
+# Maintenance Tools
+
+[English](README.md) | [中文](#维护工具)
+
+---
+
+These tools are for maintaining and fixing existing OpenClaw installations, **not required for new deployments**.
+
+## 🎯 Important Notice
+
+If you are a **new user**, you only need to run:
+
+```bash
+bash openclaw-deploy.sh
+```
+
+The deployment script will automatically configure all settings correctly. **You don't need to run these maintenance tools.**
+
+---
+
+## 🔧 Tool List
+
+### fix-tailscale-routing.sh
+
+**Purpose**: Fix incorrect Tailscale routing configuration in existing installations
+
+**Use Cases**:
+- You manually configured Tailscale before using the deployment script
+- Tailscale routing configuration is incorrect
+- Need to reconfigure Tailscale routing
+
+**Usage**:
+```bash
+bash tools/fix-tailscale-routing.sh
+```
+
+---
+
+### fix-gateway-origin.sh
+
+**Purpose**: Fix Gateway allowedOrigins configuration
+
+**Use Cases**:
+- Getting "origin not allowed" error when accessing via Tailscale
+- Need to add new domains to the whitelist
+- Need to reconfigure allowedOrigins
+
+**Usage**:
+```bash
+bash tools/fix-gateway-origin.sh
+```
+
+---
+
+### reset-gateway-token.sh
+
+**Purpose**: Reset Gateway authentication token
+
+**Use Cases**:
+- Token leaked and needs to be changed
+- Authentication failed and locked out
+- Forgot the token
+
+**Usage**:
+```bash
+bash tools/reset-gateway-token.sh
+```
+
+---
+
+## 💡 Design Philosophy
+
+These tools exist to:
+
+1. **Maintain existing installations** - Fix issues from manual configuration or old deployments
+2. **Reconfigure** - Use when configuration changes are needed
+3. **Disaster recovery** - Quick recovery when configuration is corrupted
+
+**New users don't need to worry about these tools** - the deployment script includes all correct configurations.
+
+---
+
+## 📚 Related Documentation
+
+- Complete deployment guide: [../README.md](../README.md)
+- Troubleshooting: [../POST_DEPLOYMENT_ISSUES.md](../POST_DEPLOYMENT_ISSUES.md)
+- Deployment review: [../DEPLOYMENT_SUMMARY.md](../DEPLOYMENT_SUMMARY.md)
+
+---
+
+# 维护工具
+
+[English](#maintenance-tools) | [中文](README.md)
+
+---
 
 这些工具用于维护和修复已有的 OpenClaw 安装，**不是新部署所必需的**。
 
@@ -10,7 +104,7 @@
 bash openclaw-deploy.sh
 ```
 
-部署脚本会自动配置所有正确的设置，**不需要运行这些修复工具**。
+部署脚本会自动配置所有正确的设置，**不需要运行这些维护工具**。
 
 ---
 
@@ -78,6 +172,6 @@ bash tools/reset-gateway-token.sh
 
 ## 📚 相关文档
 
-- 完整部署指南: [../README.md](../README.md)
+- 完整部署指南: [../README_CN.md](../README_CN.md)
 - 故障排查: [../POST_DEPLOYMENT_ISSUES.md](../POST_DEPLOYMENT_ISSUES.md)
 - 部署复盘: [../DEPLOYMENT_SUMMARY.md](../DEPLOYMENT_SUMMARY.md)
