@@ -4,22 +4,19 @@
 
 ---
 
-**Linux 服务器生产环境部署工具** - 自动化安装、配置和管理，包括 Nginx、Tailscale 和 systemd。
-
-> **注意**: 本工具专为 **Linux 服务器生产环境部署**设计。如需在 macOS/Windows 开发环境安装，请使用[官方安装器](https://docs.openclaw.ai/zh-CN/install)。
+**OpenClaw Gateway 生产环境部署工具** - 自动化安装、配置和管理，包括 Nginx、Tailscale 和服务管理。
 
 ## 🎯 特性
 
-- **真正的一键部署** - 从一开始就正确配置所有设置
-- **无需手动修复** - 部署一次，立即使用
-- **跨平台支持** - 支持 Debian、Ubuntu、CentOS、RHEL、Arch Linux
-- **完整的依赖管理** - 自动安装所有需要的依赖
-- **智能故障排查** - 自动检测和诊断问题
-- **内置最佳实践** - 基于实际部署经验
+- **Docker 支持** - 所有平台最简单的部署方式
+- **跨平台** - Linux、macOS、Windows (WSL2)
+- **完全自动化** - 一条命令部署所有内容
+- **生产就绪** - 包含 Nginx、Tailscale、服务管理
+- **最佳实践** - 基于实际部署经验
 
 ## 🚀 快速开始
 
-### Docker（推荐所有平台）🐳
+### Docker（推荐）🐳
 
 **最简单的部署方式，适用于所有平台：**
 
@@ -52,125 +49,61 @@ docker-compose up -d
 
 **Linux:**
 ```bash
-# 克隆仓库
 git clone https://github.com/t2krew/openclaw-toolkit.git
 cd openclaw-toolkit
-
-# 一键部署
 sudo bash openclaw-deploy.sh
 ```
 
 **macOS:**
 ```bash
-# 克隆仓库
 git clone https://github.com/t2krew/openclaw-toolkit.git
 cd openclaw-toolkit
-
-# 一键部署
 bash openclaw-deploy-macos.sh
 ```
+
+**Windows (WSL2):**
+```powershell
+# 在 PowerShell（管理员）中
+wsl --install
+# 重启后，在 Ubuntu 中：
+git clone https://github.com/t2krew/openclaw-toolkit.git
+cd openclaw-toolkit
+sudo bash openclaw-deploy.sh
+```
+
+详细的 Windows 说明请参考 [WINDOWS_WSL2_GUIDE.md](WINDOWS_WSL2_GUIDE.md)。
 
 ## 💻 系统要求
 
-### 支持的 Linux 发行版
+### Docker 部署（推荐）
+- Docker 20.10+
+- Docker Compose 2.0+
+- 支持平台：Linux、macOS、Windows
 
-本工具支持以下 Linux 发行版：
+### 原生部署
 
-- ✅ **Debian** 10+
-- ✅ **Ubuntu** 20.04+
-- ✅ **CentOS** 7+
-- ✅ **RHEL** 8+
-- ✅ **Arch Linux**
-- ✅ **Manjaro**
+**Linux:**
+- Debian 10+ / Ubuntu 20.04+
+- CentOS 7+ / RHEL 8+
+- Arch Linux / Manjaro
 
-### macOS 支持
-
-**新功能！** 我们现在提供完整的 macOS 部署脚本，具备完整的生产环境功能：
-
-```bash
-# macOS 部署（包括 Nginx、Tailscale、launchd）
-bash openclaw-deploy-macos.sh
-```
-
-**macOS 功能特性:**
-- ✅ 完整的生产环境部署（与 Linux 相同）
-- ✅ Nginx 反向代理配置
-- ✅ Tailscale 网络设置
-- ✅ launchd 服务管理（代替 systemd）
-- ✅ Homebrew 包管理
-- ✅ 所有安全配置
-
-**macOS 要求:**
+**macOS:**
 - macOS 10.15 (Catalina) 或更高版本
-- 管理员权限
-- 网络连接
+- Intel 或 Apple Silicon (M1/M2/M3)
 
-### Windows 用户
-
-**对于 Windows**，我们推荐使用 WSL2（Windows Linux 子系统）：
-
-**快速设置：**
-
-1. 下载并运行设置脚本：
-   ```powershell
-   # 在 PowerShell（管理员）中
-   iwr -useb https://raw.githubusercontent.com/t2krew/openclaw-toolkit/main/install-wsl2.ps1 | iex
-   ```
-
-2. 或手动安装 WSL2：
-   ```powershell
-   # 在 PowerShell（管理员）中
-   wsl --install
-   ```
-
-3. 重启后，在 Ubuntu (WSL2) 中：
-   ```bash
-   git clone https://github.com/t2krew/openclaw-toolkit.git
-   cd openclaw-toolkit
-   sudo bash openclaw-deploy.sh
-   ```
-
-**为什么选择 WSL2？**
-- ✅ Windows 上的完整 Linux 环境
-- ✅ 原生性能
-- ✅ 完整的 systemd 支持
-- ✅ 使用相同的 Linux 部署脚本
-- ✅ 无需虚拟机
-
-**从 Windows 访问：**
-- Control UI: http://localhost:9000/openclaw/
-- WebSocket: ws://localhost:9000/openclaw/ws
-
-详细说明请参考 [WINDOWS_WSL2_GUIDE.md](WINDOWS_WSL2_GUIDE.md)。
-
-**替代方案：** 如果只需要开发环境（不需要 Nginx/Tailscale），可使用官方安装器：
-```powershell
-iwr -useb https://openclaw.ai/install.ps1 | iex
-```
-
-更多信息请参考[官方安装指南](https://docs.openclaw.ai/zh-CN/install)。
+**Windows:**
+- Windows 10 版本 2004+ 或 Windows 11
+- WSL2 + Ubuntu/Debian
 
 ## 📦 本工具的功能
 
-## 📦 本工具的功能
-
-**这就是全部！** 部署脚本会：
-- ✅ 检查网络连接
-- ✅ 安装所有依赖（包括 jq、nginx 等）
-- ✅ 通过 fnm 安装 Node.js
+**完整的生产环境部署：**
 - ✅ 安装 OpenClaw Gateway
-- ✅ 使用你的 API 密钥配置 OpenClaw
-- ✅ 设置 Nginx 反向代理和正确的 WebSocket 路径
-- ✅ 配置 Tailscale 路由（如果选择）
-- ✅ 自动设置 Gateway allowedOrigins
-- ✅ 创建 systemd 服务实现自动启动
-- ✅ 验证所有功能正常
-
-**这是完整的生产环境部署**，不仅仅是安装器。包括：
-- Nginx 反向代理配置
-- Tailscale 网络设置
-- systemd 服务管理
-- 安全配置（Token 认证、来源白名单）
+- ✅ 配置 Nginx 反向代理
+- ✅ 设置 Tailscale 网络（可选）
+- ✅ 配置服务管理（systemd/launchd）
+- ✅ 设置安全配置（Token 认证、来源白名单）
+- ✅ 启用开机自动启动
 
 ## 📁 包含内容
 
@@ -196,6 +129,15 @@ iwr -useb https://openclaw.ai/install.ps1 | iex
 
 ## 🌐 架构
 
+**Docker 部署：**
+```
+Docker Compose
+├── openclaw-gateway (容器)
+├── nginx (容器)
+└── tailscale (可选)
+```
+
+**原生部署：**
 ```
 Internet
    ↓
@@ -203,53 +145,46 @@ Tailscale Network (HTTPS)
    ↓
 Nginx (127.0.0.1:9000)
    ├── /openclaw/         → OpenClaw Control UI
-   ├── /openclaw/ws       → OpenClaw WebSocket
-   └── /                  → Tailscale Web UI
+   └── /openclaw/ws       → OpenClaw WebSocket
 ```
-
-## 🎓 内置最佳实践
-
-部署脚本自动实现：
-- ✅ **动态路径解析** - 无硬编码路径，支持任何 Node.js 版本
-- ✅ **跨平台 Nginx** - 支持 Debian/Ubuntu 和 CentOS/RHEL 的目录结构
-- ✅ **完整的错误处理** - 每一步都检查，失败时清理
-- ✅ **WebSocket 反向代理** - 统一路径前缀设计
-- ✅ **API 密钥管理** - 环境变量方式
-- ✅ **Tailscale 配置** - 所有流量通过 Nginx，路由配置正确
-- ✅ **Gateway 安全** - Token 认证和来源白名单
-- ✅ **服务管理** - Systemd 集成确保可靠性
 
 ## 🔧 故障排查
 
-如果遇到问题：
+**Docker:**
+```bash
+# 查看日志
+docker-compose logs -f
 
+# 重启服务
+docker-compose restart
+
+# 检查状态
+docker-compose ps
+```
+
+**原生部署:**
 ```bash
 # 运行故障排查工具
 bash openclaw-troubleshoot.sh
 
-# 检查服务状态
+# 检查服务状态（Linux）
 systemctl status openclaw-gateway.service
 
-# 查看日志
-journalctl -u openclaw-gateway.service -f
+# 检查服务状态（macOS）
+launchctl list | grep openclaw
 ```
 
 ## 📞 获取帮助
 
+- **GitHub Issues**: https://github.com/t2krew/openclaw-toolkit/issues
 - **官方文档**: https://docs.openclaw.ai/
-- **故障排查**: https://docs.openclaw.ai/troubleshooting
-- **问题反馈**: https://github.com/t2krew/openclaw-toolkit/issues
 
 ## 📝 许可证
 
 MIT License
 
-## 🙏 致谢
-
-在 Raspberry Pi (ARM64) 上部署 OpenClaw Gateway 过程中开发。
-
 ---
 
-**版本**: v2.0.0
+**版本**: v2.4.0
 **更新时间**: 2026-03-06
 **仓库地址**: https://github.com/t2krew/openclaw-toolkit

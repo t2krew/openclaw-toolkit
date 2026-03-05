@@ -4,22 +4,19 @@
 
 ---
 
-**Production-ready deployment toolkit for OpenClaw Gateway on Linux servers** - Automated installation, configuration, and management with Nginx, Tailscale, and systemd.
-
-> **Note**: This toolkit is designed for **Linux server production deployments**. For macOS/Windows development environments, please use the [official installer](https://docs.openclaw.ai/install).
+**Production-ready deployment toolkit for OpenClaw Gateway** - Automated installation, configuration, and management with Nginx, Tailscale, and service management.
 
 ## 🎯 Features
 
-- **True One-Click Deployment** - All configurations done correctly from the start
-- **No Manual Fixes Required** - Deploy once, use immediately
-- **Cross-Platform Support** - Works on Debian, Ubuntu, CentOS, RHEL, Arch Linux
-- **Complete Dependency Management** - Automatically installs everything needed
-- **Intelligent Troubleshooting** - Automatic problem detection and diagnosis
-- **Best Practices Built-in** - Based on real-world deployment experience
+- **Docker Support** - Easiest deployment method for all platforms
+- **Cross-Platform** - Linux, macOS, Windows (WSL2)
+- **Complete Automation** - One command to deploy everything
+- **Production Ready** - Nginx, Tailscale, service management included
+- **Best Practices** - Based on real-world deployment experience
 
 ## 🚀 Quick Start
 
-### Docker (Recommended for all platforms) 🐳
+### Docker (Recommended) 🐳
 
 **The easiest way to deploy on any platform:**
 
@@ -52,125 +49,61 @@ For detailed instructions, see [DOCKER_GUIDE.md](DOCKER_GUIDE.md).
 
 **Linux:**
 ```bash
-# Clone the repository
 git clone https://github.com/t2krew/openclaw-toolkit.git
 cd openclaw-toolkit
-
-# One-click deployment
 sudo bash openclaw-deploy.sh
 ```
 
 **macOS:**
 ```bash
-# Clone the repository
 git clone https://github.com/t2krew/openclaw-toolkit.git
 cd openclaw-toolkit
-
-# One-click deployment
 bash openclaw-deploy-macos.sh
 ```
+
+**Windows (WSL2):**
+```powershell
+# In PowerShell (Administrator)
+wsl --install
+# After reboot, in Ubuntu:
+git clone https://github.com/t2krew/openclaw-toolkit.git
+cd openclaw-toolkit
+sudo bash openclaw-deploy.sh
+```
+
+For detailed Windows instructions, see [WINDOWS_WSL2_GUIDE.md](WINDOWS_WSL2_GUIDE.md).
 
 ## 💻 System Requirements
 
-### Supported Linux Distributions
+### Docker Deployment (Recommended)
+- Docker 20.10+
+- Docker Compose 2.0+
+- Works on: Linux, macOS, Windows
 
-This toolkit supports the following Linux distributions:
+### Native Deployment
 
-- ✅ **Debian** 10+
-- ✅ **Ubuntu** 20.04+
-- ✅ **CentOS** 7+
-- ✅ **RHEL** 8+
-- ✅ **Arch Linux**
-- ✅ **Manjaro**
+**Linux:**
+- Debian 10+ / Ubuntu 20.04+
+- CentOS 7+ / RHEL 8+
+- Arch Linux / Manjaro
 
-### macOS Support
-
-**NEW!** We now provide a complete macOS deployment script with full production features:
-
-```bash
-# macOS deployment (includes Nginx, Tailscale, launchd)
-bash openclaw-deploy-macos.sh
-```
-
-**Features on macOS:**
-- ✅ Complete production deployment (same as Linux)
-- ✅ Nginx reverse proxy configuration
-- ✅ Tailscale network setup
-- ✅ launchd service management (instead of systemd)
-- ✅ Homebrew package management
-- ✅ All security configurations
-
-**macOS Requirements:**
+**macOS:**
 - macOS 10.15 (Catalina) or later
-- Administrator privileges
-- Internet connection
+- Intel or Apple Silicon (M1/M2/M3)
 
-### Windows Users
-
-**For Windows**, we recommend using WSL2 (Windows Subsystem for Linux):
-
-**Quick Setup:**
-
-1. Download and run the setup script:
-   ```powershell
-   # In PowerShell (Administrator)
-   iwr -useb https://raw.githubusercontent.com/t2krew/openclaw-toolkit/main/install-wsl2.ps1 | iex
-   ```
-
-2. Or manually install WSL2:
-   ```powershell
-   # In PowerShell (Administrator)
-   wsl --install
-   ```
-
-3. After reboot, in Ubuntu (WSL2):
-   ```bash
-   git clone https://github.com/t2krew/openclaw-toolkit.git
-   cd openclaw-toolkit
-   sudo bash openclaw-deploy.sh
-   ```
-
-**Why WSL2?**
-- ✅ Full Linux environment on Windows
-- ✅ Native performance
-- ✅ Complete systemd support
-- ✅ Use the same Linux deployment script
-- ✅ No virtual machine needed
-
-**Access from Windows:**
-- Control UI: http://localhost:9000/openclaw/
-- WebSocket: ws://localhost:9000/openclaw/ws
-
-For detailed instructions, see [WINDOWS_WSL2_GUIDE.md](WINDOWS_WSL2_GUIDE.md).
-
-**Alternative:** For development-only setup without Nginx/Tailscale, use the official installer:
-```powershell
-iwr -useb https://openclaw.ai/install.ps1 | iex
-```
-
-For more information, see the [official installation guide](https://docs.openclaw.ai/install).
+**Windows:**
+- Windows 10 version 2004+ or Windows 11
+- WSL2 with Ubuntu/Debian
 
 ## 📦 What This Toolkit Does
 
-## 📦 What This Toolkit Does
-
-**That's all you need!** The deployment script will:
-- ✅ Check network connection
-- ✅ Install all dependencies (including jq, nginx, etc.)
-- ✅ Install Node.js via fnm
+**Complete production deployment:**
 - ✅ Install OpenClaw Gateway
-- ✅ Configure OpenClaw with your API keys
-- ✅ Set up Nginx reverse proxy with correct WebSocket paths
-- ✅ Configure Tailscale routing (if selected)
-- ✅ Set up Gateway allowedOrigins automatically
-- ✅ Create systemd service for auto-start
-- ✅ Verify everything works
-
-**This is a complete production deployment**, not just an installer. It includes:
-- Nginx reverse proxy configuration
-- Tailscale network setup
-- systemd service management
-- Security configurations (token auth, origin whitelist)
+- ✅ Configure Nginx reverse proxy
+- ✅ Set up Tailscale network (optional)
+- ✅ Configure service management (systemd/launchd)
+- ✅ Set up security (token auth, origin whitelist)
+- ✅ Enable auto-start on boot
 
 ## 📁 What's Included
 
@@ -196,6 +129,15 @@ For more information, see the [official installation guide](https://docs.opencla
 
 ## 🌐 Architecture
 
+**Docker Deployment:**
+```
+Docker Compose
+├── openclaw-gateway (container)
+├── nginx (container)
+└── tailscale (optional)
+```
+
+**Native Deployment:**
 ```
 Internet
    ↓
@@ -203,53 +145,46 @@ Tailscale Network (HTTPS)
    ↓
 Nginx (127.0.0.1:9000)
    ├── /openclaw/         → OpenClaw Control UI
-   ├── /openclaw/ws       → OpenClaw WebSocket
-   └── /                  → Tailscale Web UI
+   └── /openclaw/ws       → OpenClaw WebSocket
 ```
-
-## 🎓 Built-in Best Practices
-
-The deployment script automatically implements:
-- ✅ **Dynamic Path Resolution** - No hardcoded paths, works with any Node.js version
-- ✅ **Cross-Platform Nginx** - Supports both Debian/Ubuntu and CentOS/RHEL directory structures
-- ✅ **Complete Error Handling** - Every step is checked, with cleanup on failure
-- ✅ **WebSocket Reverse Proxy** - Unified path prefix design
-- ✅ **API Key Management** - Environment variable approach
-- ✅ **Tailscale Configuration** - All traffic through Nginx with correct routing
-- ✅ **Gateway Security** - Token authentication and origin whitelist
-- ✅ **Service Management** - Systemd integration for reliability
 
 ## 🔧 Troubleshooting
 
-If you encounter any issues:
-
+**Docker:**
 ```bash
-# Run the troubleshooting tool
+# View logs
+docker-compose logs -f
+
+# Restart services
+docker-compose restart
+
+# Check status
+docker-compose ps
+```
+
+**Native:**
+```bash
+# Run troubleshooting tool
 bash openclaw-troubleshoot.sh
 
-# Check service status
+# Check service status (Linux)
 systemctl status openclaw-gateway.service
 
-# View logs
-journalctl -u openclaw-gateway.service -f
+# Check service status (macOS)
+launchctl list | grep openclaw
 ```
 
 ## 📞 Support
 
+- **GitHub Issues**: https://github.com/t2krew/openclaw-toolkit/issues
 - **Official Docs**: https://docs.openclaw.ai/
-- **Troubleshooting**: https://docs.openclaw.ai/troubleshooting
-- **Issues**: https://github.com/t2krew/openclaw-toolkit/issues
 
 ## 📝 License
 
 MIT License
 
-## 🙏 Acknowledgments
-
-Developed during the deployment of OpenClaw Gateway on Raspberry Pi (ARM64).
-
 ---
 
-**Version**: v2.0.0
+**Version**: v2.4.0
 **Last Updated**: 2026-03-06
 **Repository**: https://github.com/t2krew/openclaw-toolkit
