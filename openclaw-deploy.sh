@@ -278,10 +278,11 @@ install_nodejs() {
 # 安装 OpenClaw
 install_openclaw() {
     log_info "安装 OpenClaw..."
-    
+
     export PATH="$NODE_PATH/installation/bin:$PATH"
-    
-    npm install -g openclaw || {
+
+    # 使用国内镜像源加速安装
+    npm install -g openclaw --registry=https://registry.npmmirror.com || {
         log_error "OpenClaw 安装失败"
         DEPLOYMENT_FAILED=1
         exit 1
