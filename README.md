@@ -220,12 +220,31 @@ bash openclaw-uninstall.sh
 - **GitHub Issues**: https://github.com/t2krew/openclaw-toolkit/issues
 - **Official Docs**: https://docs.openclaw.ai/
 
+## ☕ Buy Me a Coffee
+
+If this project helps you, consider buying me a coffee! Your support is greatly appreciated! 🙏
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="images/wechat-pay.jpg" width="200" alt="WeChat Pay"><br>
+        <b>WeChat Pay</b>
+      </td>
+      <td align="center">
+        <img src="images/alipay.jpg" width="200" alt="Alipay"><br>
+        <b>Alipay</b>
+      </td>
+    </tr>
+  </table>
+</div>
+
 ## 📝 License
 
 MIT License
 
 ---
 
-**Version**: v2.4.0
+**Version**: v2.5.0
 **Last Updated**: 2026-03-06
 **Repository**: https://github.com/t2krew/openclaw-toolkit
