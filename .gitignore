@@ -1,0 +1,49 @@
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore log files
+*.log
+*.log.*
+
+# Ignore backup files
+*.bak
+*.backup
+*~
+
+# Ignore temporary files
+*.tmp
+*.temp
+.*.swp
+.*.swo
+
+# Ignore generated files
+config.txt
+deployment-report.txt
+diagnostics-*.txt
+
+# Ignore hidden summary files
+.summary
+.update-summary
+.completion-report
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# Ignore OS files
+.Trash-*/
+.directory
+
+# Ignore sensitive data
+*_secret*
+*_private*
+*.key
+*.pem
+*.crt
+
+# Keep important files
+!README.md
+!CHANGELOG.md
+!LICENSE
