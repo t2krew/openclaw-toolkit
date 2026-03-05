@@ -2,7 +2,7 @@
 
 ################################################################################
 # OpenClaw 一键部署脚本
-# 版本: 1.0.0
+# 版本: 1.1.0
 # 日期: 2026-03-06
 # 作者: Claude (Kiro AI Assistant)
 #
@@ -10,7 +10,8 @@
 # - 自动安装 OpenClaw Gateway
 # - 配置 Nginx 反向代理
 # - 配置 Telegram Bot
-# - 配置 Tailscale 网络
+# - 配置 Tailscale 网络（包括正确的路由配置）
+# - 配置 Gateway allowedOrigins
 # - 自动修复常见问题
 #
 # 使用方法:
@@ -392,21 +393,73 @@ verify_deployment() {
 
 # 安装 Tailscale（可选）
 install_tailscale() {
-    log_info "是否安装 Tailscale? (y/n)"
+    log_info "是否配置 Tailscale? (y/n)"
     read -p "> " install_ts
 
     if [ "$install_ts" != "y" ]; then
-        log_info "跳过 Tailscale 安装"
+        log_info "跳过 Tailscale 配置"
         return
     fi
 
-    log_info "安装 Tailscale..."
+    # 检查 Tailscale 是否已安装
+    if ! command -v tailscale &> /dev/null; then
+        log_info "Tailscale 未安装，正在安装..."
+        curl -fsSL https://tailscale.com/install.sh | sh
+        log_success "Tailscale 安装完成"
+    else
+        log_info "Tailscale 已安装"
+    fi
 
-    curl -fsSL https://tailscale.com/install.sh | sh
+    # 检查 Tailscale 是否运行
+    if ! tailscale status &> /dev/null; then
+        log_warning "Tailscale 未运行"
+        log_info "请运行 'tailscale up' 来启动 Tailscale"
+        log_info "启动后可以运行以下命令配置路由:"
+        log_info "  bash /root/openclaw-tool/fix-tailscale-routing.sh"
+        return
+    fi
 
-    log_success "Tailscale 安装完成"
-    log_info "请运行 'tailscale up' 来启动 Tailscale"
-    log_info "然后运行 'tailscale serve https / http://127.0.0.1:9000' 来配置反向代理"
+    log_info "配置 Tailscale Serve 路由..."
+
+    # 重置现有配置
+    log_info "重置现有 Tailscale Serve 配置..."
+    tailscale serve reset 2>/dev/null || true
+
+    # 配置 HTTPS (443) 代理到 Nginx
+    log_info "配置 HTTPS (443) → Nginx (9000)..."
+    tailscale serve --bg http://127.0.0.1:9000
+
+    # 配置 HTTP (80) 代理到 Nginx
+    log_info "配置 HTTP (80) → Nginx (9000)..."
+    tailscale serve --http=80 --bg http://127.0.0.1:9000
+
+    # 获取 Tailscale 域名
+    TAILSCALE_DOMAIN=$(tailscale status --json 2>/dev/null | jq -r '.Self.DNSName' | sed 's/\.$//' || echo "")
+
+    # 配置 Gateway allowedOrigins
+    if [ -n "$TAILSCALE_DOMAIN" ]; then
+        log_info "配置 Gateway 允许的来源..."
+        export PATH="/root/.local/share/fnm/node-versions/v24.13.0/installation/bin:$PATH"
+        openclaw config set gateway.controlUi.allowedOrigins "[\"https://$TAILSCALE_DOMAIN\"]" 2>/dev/null || true
+
+        # 重启 Gateway 应用配置
+        log_info "重启 Gateway 应用配置..."
+        systemctl restart openclaw-gateway.service
+        sleep 5
+    fi
+
+    # 验证配置
+    log_info "验证 Tailscale 配置..."
+    tailscale serve status
+
+    log_success "Tailscale 配置完成"
+
+    if [ -n "$TAILSCALE_DOMAIN" ]; then
+        echo ""
+        log_success "访问地址:"
+        echo "  https://$TAILSCALE_DOMAIN/openclaw/"
+        echo ""
+    fi
 }
 
 # 生成部署报告
@@ -446,9 +499,9 @@ OpenClaw 部署报告
 - 测试连接: openclaw gateway probe
 
 下一步:
-1. 配置 Tailscale (如果需要外部访问)
+1. 配置 Tailscale (如果未在部署时配置)
    - tailscale up
-   - tailscale serve https / http://127.0.0.1:9000
+   - bash /root/openclaw-tool/fix-tailscale-routing.sh
 
 2. 配置 Telegram 白名单 (如果启用了 Telegram)
    - 发送消息给 Bot
@@ -464,6 +517,9 @@ OpenClaw 部署报告
 - Gateway 无法连接: systemctl status openclaw-gateway.service
 - Nginx 502 错误: tail -f /var/log/nginx/openclaw-error.log
 - API 密钥错误: openclaw models status
+- Tailscale 路由错误: bash /root/openclaw-tool/fix-tailscale-routing.sh
+- Gateway Origin 错误: bash /root/openclaw-tool/fix-gateway-origin.sh
+- 认证失败: bash /root/openclaw-tool/reset-gateway-token.sh
 
 EOF
 
@@ -475,7 +531,7 @@ main() {
     echo ""
     echo "=========================================="
     echo "OpenClaw 一键部署脚本"
-    echo "版本: 1.0.0"
+    echo "版本: 1.1.0"
     echo "=========================================="
     echo ""
 
