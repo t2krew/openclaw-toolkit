@@ -1,5 +1,124 @@
 # OpenClaw 工具集更新日志
 
+## v2.3.0 (2026-03-06)
+
+### 🪟 新增 Windows WSL2 支持
+
+#### Windows 用户的完整解决方案
+
+基于用户需求："我想在 Windows 系统中同样跑一套这样的系统"
+
+**新增功能**:
+
+1. **Windows WSL2 设置助手** (`install-wsl2.ps1`)
+   - PowerShell 脚本，自动化 WSL2 安装
+   - 检查系统要求（Windows 版本、管理员权限）
+   - 一键安装 WSL2 和 Ubuntu
+   - 快速部署 OpenClaw 选项
+   - 友好的中文界面
+
+2. **详细的 WSL2 指南** (`WINDOWS_WSL2_GUIDE.md`)
+   - 完整的安装步骤
+   - 常用命令参考
+   - 故障排查指南
+   - 性能优化建议
+   - 自动启动配置
+   - 文件访问说明
+
+3. **技术方案**
+   - 使用 WSL2 提供完整的 Linux 环境
+   - 直接运行 Linux 部署脚本（openclaw-deploy.sh）
+   - 无需创建原生 Windows 脚本
+   - 性能接近原生 Linux
+
+**为什么选择 WSL2？**
+
+| 特性 | WSL2 | 原生 Windows |
+|------|------|-------------|
+| Linux 环境 | ✅ 完整 | ❌ 需要模拟 |
+| systemd 支持 | ✅ | ❌ |
+| Nginx 支持 | ✅ 原生 | ⚠️ nginx.exe |
+| 性能 | ✅ 接近原生 | ⚠️ 较差 |
+| 维护成本 | ✅ 低 | ❌ 高 |
+| 脚本复用 | ✅ 使用 Linux 脚本 | ❌ 需要重写 |
+
+**使用方法**:
+
+```powershell
+# 方法 1: 使用设置助手（推荐）
+iwr -useb https://raw.githubusercontent.com/t2krew/openclaw-toolkit/main/install-wsl2.ps1 | iex
+
+# 方法 2: 手动安装
+wsl --install
+# 重启后在 Ubuntu 中运行 Linux 部署脚本
+```
+
+**从 Windows 访问**:
+- Control UI: http://localhost:9000/openclaw/
+- WebSocket: ws://localhost:9000/openclaw/ws
+
+**系统要求**:
+- Windows 10 版本 2004 (Build 19041) 或更高
+- Windows 11（所有版本）
+- 管理员权限
+
+### 📝 文档更新
+
+1. **README.md** - 添加 Windows WSL2 说明
+2. **README_CN.md** - 添加 Windows WSL2 说明（中文）
+3. **WINDOWS_WSL2_GUIDE.md** - 新增详细指南
+4. 更新文件列表
+
+### 🎯 跨平台支持总结
+
+**当前支持的平台**:
+
+| 平台 | 脚本 | 状态 |
+|------|------|------|
+| Linux (Debian/Ubuntu) | openclaw-deploy.sh | ✅ |
+| Linux (CentOS/RHEL) | openclaw-deploy.sh | ✅ |
+| Linux (Arch/Manjaro) | openclaw-deploy.sh | ✅ |
+| macOS | openclaw-deploy-macos.sh | ✅ |
+| Windows (WSL2) | openclaw-deploy.sh | ✅ |
+
+**功能对比**:
+
+| 功能 | Linux | macOS | Windows (WSL2) |
+|------|-------|-------|----------------|
+| OpenClaw 安装 | ✅ | ✅ | ✅ |
+| Nginx 配置 | ✅ | ✅ | ✅ |
+| Tailscale 配置 | ✅ | ✅ | ✅ |
+| 服务管理 | systemd | launchd | systemd |
+| 包管理器 | apt/yum/pacman | Homebrew | apt |
+| 自动启动 | ✅ | ✅ | ✅ |
+| 完整配置 | ✅ | ✅ | ✅ |
+
+### 🎓 设计理念
+
+**为什么 Windows 使用 WSL2 而不是原生脚本？**
+
+1. **技术优势**
+   - WSL2 提供完整的 Linux 内核
+   - 支持 systemd（Windows 原生不支持）
+   - Nginx 在 Linux 上更稳定
+   - 性能接近原生 Linux
+
+2. **开发效率**
+   - 复用现有的 Linux 脚本
+   - 无需维护 Windows 特定代码
+   - 减少测试和维护成本
+
+3. **用户体验**
+   - 一致的部署体验
+   - 相同的命令和配置
+   - 更好的兼容性
+
+4. **生产环境对等**
+   - 开发环境与生产环境一致
+   - 避免"在我机器上能跑"的问题
+
+---
+
 ## v2.2.0 (2026-03-06)
 
 ### 🎉 新增 macOS 完整支持

@@ -65,14 +65,46 @@ bash openclaw-deploy-macos.sh
 
 ### Windows Users
 
-**For Windows (development environments)**, please use the official OpenClaw installer:
+**For Windows**, we recommend using WSL2 (Windows Subsystem for Linux):
 
-- **Windows**:
-  ```powershell
-  iwr -useb https://openclaw.ai/install.ps1 | iex
-  ```
+**Quick Setup:**
 
-- **Windows (WSL2)**: You can use the Linux deployment script inside WSL2 with Ubuntu/Debian
+1. Download and run the setup script:
+   ```powershell
+   # In PowerShell (Administrator)
+   iwr -useb https://raw.githubusercontent.com/t2krew/openclaw-toolkit/main/install-wsl2.ps1 | iex
+   ```
+
+2. Or manually install WSL2:
+   ```powershell
+   # In PowerShell (Administrator)
+   wsl --install
+   ```
+
+3. After reboot, in Ubuntu (WSL2):
+   ```bash
+   git clone https://github.com/t2krew/openclaw-toolkit.git
+   cd openclaw-toolkit
+   sudo bash openclaw-deploy.sh
+   ```
+
+**Why WSL2?**
+- ✅ Full Linux environment on Windows
+- ✅ Native performance
+- ✅ Complete systemd support
+- ✅ Use the same Linux deployment script
+- ✅ No virtual machine needed
+
+**Access from Windows:**
+- Control UI: http://localhost:9000/openclaw/
+- WebSocket: ws://localhost:9000/openclaw/ws
+
+For detailed instructions, see [WINDOWS_WSL2_GUIDE.md](WINDOWS_WSL2_GUIDE.md).
+
+**Alternative:** For development-only setup without Nginx/Tailscale, use the official installer:
+```powershell
+iwr -useb https://openclaw.ai/install.ps1 | iex
+```
 
 For more information, see the [official installation guide](https://docs.openclaw.ai/install).
 
@@ -102,9 +134,11 @@ For more information, see the [official installation guide](https://docs.opencla
 
 - **openclaw-deploy.sh** - Linux deployment script (production-ready)
 - **openclaw-deploy-macos.sh** - macOS deployment script (production-ready)
+- **install-wsl2.ps1** - Windows WSL2 setup helper (PowerShell)
 - **openclaw-troubleshoot.sh** - Diagnostic and troubleshooting tool
 - **README.md** - English documentation
 - **README_CN.md** - Chinese documentation
+- **WINDOWS_WSL2_GUIDE.md** - Detailed Windows WSL2 guide
 - **CHANGELOG.md** - Version history
 - **LICENSE** - MIT License
 

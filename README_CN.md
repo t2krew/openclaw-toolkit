@@ -65,14 +65,46 @@ bash openclaw-deploy-macos.sh
 
 ### Windows 用户
 
-**如需在 Windows（开发环境）安装**，请使用 OpenClaw 官方安装器：
+**对于 Windows**，我们推荐使用 WSL2（Windows Linux 子系统）：
 
-- **Windows**:
-  ```powershell
-  iwr -useb https://openclaw.ai/install.ps1 | iex
-  ```
+**快速设置：**
 
-- **Windows (WSL2)**: 可以在 WSL2 的 Ubuntu/Debian 中使用 Linux 部署脚本
+1. 下载并运行设置脚本：
+   ```powershell
+   # 在 PowerShell（管理员）中
+   iwr -useb https://raw.githubusercontent.com/t2krew/openclaw-toolkit/main/install-wsl2.ps1 | iex
+   ```
+
+2. 或手动安装 WSL2：
+   ```powershell
+   # 在 PowerShell（管理员）中
+   wsl --install
+   ```
+
+3. 重启后，在 Ubuntu (WSL2) 中：
+   ```bash
+   git clone https://github.com/t2krew/openclaw-toolkit.git
+   cd openclaw-toolkit
+   sudo bash openclaw-deploy.sh
+   ```
+
+**为什么选择 WSL2？**
+- ✅ Windows 上的完整 Linux 环境
+- ✅ 原生性能
+- ✅ 完整的 systemd 支持
+- ✅ 使用相同的 Linux 部署脚本
+- ✅ 无需虚拟机
+
+**从 Windows 访问：**
+- Control UI: http://localhost:9000/openclaw/
+- WebSocket: ws://localhost:9000/openclaw/ws
+
+详细说明请参考 [WINDOWS_WSL2_GUIDE.md](WINDOWS_WSL2_GUIDE.md)。
+
+**替代方案：** 如果只需要开发环境（不需要 Nginx/Tailscale），可使用官方安装器：
+```powershell
+iwr -useb https://openclaw.ai/install.ps1 | iex
+```
 
 更多信息请参考[官方安装指南](https://docs.openclaw.ai/zh-CN/install)。
 
@@ -102,9 +134,11 @@ bash openclaw-deploy-macos.sh
 
 - **openclaw-deploy.sh** - Linux 部署脚本（生产就绪）
 - **openclaw-deploy-macos.sh** - macOS 部署脚本（生产就绪）
+- **install-wsl2.ps1** - Windows WSL2 设置助手（PowerShell）
 - **openclaw-troubleshoot.sh** - 诊断和故障排查工具
 - **README.md** - 英文文档
 - **README_CN.md** - 中文文档
+- **WINDOWS_WSL2_GUIDE.md** - Windows WSL2 详细指南
 - **CHANGELOG.md** - 更新日志
 - **LICENSE** - MIT 许可证
 
