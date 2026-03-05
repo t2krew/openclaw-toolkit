@@ -19,13 +19,55 @@
 
 ## 🚀 快速开始
 
+### Docker（推荐所有平台）🐳
+
+**最简单的部署方式，适用于所有平台：**
+
 ```bash
 # 克隆仓库
 git clone https://github.com/t2krew/openclaw-toolkit.git
 cd openclaw-toolkit
 
-# 一键部署 - 就这么简单！
-bash openclaw-deploy.sh
+# 配置环境变量
+cp .env.example .env
+# 编辑 .env 文件，添加你的 API 密钥
+
+# 启动所有服务
+docker-compose up -d
+
+# 访问 Control UI
+# http://localhost:9000/openclaw/
+```
+
+**为什么选择 Docker？**
+- ✅ 支持 Linux、macOS、Windows
+- ✅ 无需安装 Node.js、Nginx 等依赖
+- ✅ 隔离环境
+- ✅ 易于管理和更新
+- ✅ 一条命令启动所有服务
+
+详细说明请参考 [DOCKER_GUIDE.md](DOCKER_GUIDE.md)。
+
+### 原生安装
+
+**Linux:**
+```bash
+# 克隆仓库
+git clone https://github.com/t2krew/openclaw-toolkit.git
+cd openclaw-toolkit
+
+# 一键部署
+sudo bash openclaw-deploy.sh
+```
+
+**macOS:**
+```bash
+# 克隆仓库
+git clone https://github.com/t2krew/openclaw-toolkit.git
+cd openclaw-toolkit
+
+# 一键部署
+bash openclaw-deploy-macos.sh
 ```
 
 ## 💻 系统要求
@@ -132,12 +174,22 @@ iwr -useb https://openclaw.ai/install.ps1 | iex
 
 ## 📁 包含内容
 
-- **openclaw-deploy.sh** - Linux 部署脚本（生产就绪）
-- **openclaw-deploy-macos.sh** - macOS 部署脚本（生产就绪）
+### 部署脚本
+- **docker-compose.yml** - Docker Compose 配置（推荐）
+- **Dockerfile** - OpenClaw Gateway Docker 镜像
+- **openclaw-deploy.sh** - Linux 原生部署脚本
+- **openclaw-deploy-macos.sh** - macOS 原生部署脚本
 - **install-wsl2.ps1** - Windows WSL2 设置助手（PowerShell）
+
+### 配置文件
+- **nginx.conf** - Nginx 反向代理配置
+- **.env.example** - 环境变量模板
+
+### 工具与文档
 - **openclaw-troubleshoot.sh** - 诊断和故障排查工具
 - **README.md** - 英文文档
 - **README_CN.md** - 中文文档
+- **DOCKER_GUIDE.md** - Docker 部署指南
 - **WINDOWS_WSL2_GUIDE.md** - Windows WSL2 详细指南
 - **CHANGELOG.md** - 更新日志
 - **LICENSE** - MIT 许可证

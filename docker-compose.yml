@@ -1,0 +1,105 @@
+version: '3.8'
+
+services:
+  # OpenClaw Gateway 服务
+  openclaw-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: openclaw-gateway
+    restart: unless-stopped
+    environment:
+      # Anthropic API 配置
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - ANTHROPIC_BASE_URL=${ANTHROPIC_BASE_URL:-https://api.anthropic.com}
+
+      # Gateway 配置
+      - OPENCLAW_GATEWAY_MODE=local
+      - OPENCLAW_GATEWAY_AUTH_MODE=token
+      - OPENCLAW_GATEWAY_AUTH_TOKEN=${GATEWAY_TOKEN}
+      - OPENCLAW_GATEWAY_CONTROL_UI_BASE_PATH=/openclaw
+
+      # Telegram 配置（可选）
+      - OPENCLAW_TELEGRAM_ENABLED=${TELEGRAM_ENABLED:-false}
+      - OPENCLAW_TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-}
+
+      # 其他配置
+      - TZ=Asia/Shanghai
+    volumes:
+      # 持久化配置和数据
+      - openclaw-config:/root/.openclaw
+      - openclaw-data:/root/.local/share/openclaw
+    networks:
+      - openclaw-network
+    healthcheck:
+      test: ["CMD", "openclaw", "gateway", "probe"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Nginx 反向代理
+  nginx:
+    image: nginx:alpine
+    container_name: openclaw-nginx
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - nginx-logs:/var/log/nginx
+    networks:
+      - openclaw-network
+    depends_on:
+      openclaw-gateway:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Tailscale（可选）
+  # 取消注释以启用 Tailscale
+  # tailscale:
+  #   image: tailscale/tailscale:latest
+  #   container_name: openclaw-tailscale
+  #   restart: unless-stopped
+  #   environment:
+  #     - TS_AUTHKEY=${TAILSCALE_AUTH_KEY}
+  #     - TS_STATE_DIR=/var/lib/tailscale
+  #     - TS_SERVE_CONFIG=/config/serve.json
+  #   volumes:
+  #     - tailscale-state:/var/lib/tailscale
+  #     - ./tailscale-serve.json:/config/serve.json:ro
+  #   cap_add:
+  #     - NET_ADMIN
+  #     - SYS_MODULE
+  #   networks:
+  #     - openclaw-network
+  #   depends_on:
+  #     - nginx
+
+networks:
+  openclaw-network:
+    driver: bridge
+
+volumes:
+  openclaw-config:
+    driver: local
+  openclaw-data:
+    driver: local
+  nginx-logs:
+    driver: local
+  # tailscale-state:
+  #   driver: local

@@ -1,5 +1,181 @@
 # OpenClaw 工具集更新日志
 
+## v2.4.0 (2026-03-06)
+
+### 🐳 新增 Docker 容器化部署
+
+#### 跨平台的最佳部署方案
+
+基于用户需求："是否支持 Docker 容器化部署？"
+
+**新增功能**:
+
+1. **Docker Compose 配置** (`docker-compose.yml`)
+   - 完整的服务编排
+   - OpenClaw Gateway 容器
+   - Nginx 反向代理容器
+   - Tailscale 容器（可选）
+   - 数据持久化（volumes）
+   - 健康检查
+   - 自动重启
+
+2. **Dockerfile**
+   - 基于 Node.js 24
+   - 优化的镜像大小
+   - 多阶段构建
+   - 健康检查支持
+
+3. **配置文件**
+   - `nginx.conf` - Nginx 配置
+   - `.env.example` - 环境变量模板
+   - `.gitignore` - 忽略敏感文件
+
+4. **详细文档** (`DOCKER_GUIDE.md`)
+   - 完整的安装步骤
+   - 常用命令参考
+   - 故障排查指南
+   - 性能优化建议
+   - 生产环境建议
+   - 备份和恢复
+
+**为什么选择 Docker？**
+
+| 特性 | Docker | 原生部署 |
+|------|--------|----------|
+| 跨平台 | ✅ 完全一致 | ⚠️ 需要不同脚本 |
+| 环境隔离 | ✅ 完全隔离 | ❌ 影响主机 |
+| 依赖管理 | ✅ 容器内包含 | ❌ 需要手动安装 |
+| 易于管理 | ✅ 一键启停 | ⚠️ 需要多个命令 |
+| 可移植性 | ✅ 轻松迁移 | ⚠️ 需要重新配置 |
+| 更新升级 | ✅ 简单 | ⚠️ 复杂 |
+
+**架构设计**:
+
+```
+Docker Compose
+├── openclaw-gateway (容器)
+│   ├── Node.js 24
+│   ├── OpenClaw Gateway
+│   └── 数据持久化
+├── nginx (容器)
+│   ├── 反向代理
+│   ├── WebSocket 支持
+│   └── 日志管理
+└── tailscale (可选容器)
+    └── 网络服务
+```
+
+**使用方法**:
+
+```bash
+# 1. 克隆仓库
+git clone https://github.com/t2krew/openclaw-toolkit.git
+cd openclaw-toolkit
+
+# 2. 配置环境变量
+cp .env.example .env
+# 编辑 .env 文件
+
+# 3. 启动服务
+docker-compose up -d
+
+# 4. 访问
+http://localhost:9000/openclaw/
+```
+
+**功能特性**:
+
+- ✅ 完整的生产环境配置
+- ✅ Nginx 反向代理
+- ✅ WebSocket 支持
+- ✅ Tailscale 网络（可选）
+- ✅ 数据持久化
+- ✅ 健康检查
+- ✅ 自动重启
+- ✅ 日志管理
+- ✅ 资源限制
+
+**数据持久化**:
+
+- `openclaw-config` - OpenClaw 配置
+- `openclaw-data` - OpenClaw 数据
+- `nginx-logs` - Nginx 日志
+
+**环境变量配置**:
+
+```bash
+# 必需
+ANTHROPIC_API_KEY=your_api_key
+GATEWAY_TOKEN=your_token
+
+# 可选
+ANTHROPIC_BASE_URL=https://api.anthropic.com
+TELEGRAM_ENABLED=false
+TELEGRAM_BOT_TOKEN=
+```
+
+### 📝 部署方式对比
+
+**现在支持 4 种部署方式**:
+
+| 部署方式 | 适用场景 | 难度 | 推荐度 |
+|---------|---------|------|--------|
+| Docker Compose | 所有平台 | ⭐ | ⭐⭐⭐⭐⭐ |
+| Linux 原生 | Linux 服务器 | ⭐⭐ | ⭐⭐⭐⭐ |
+| macOS 原生 | macOS 开发 | ⭐⭐ | ⭐⭐⭐ |
+| Windows WSL2 | Windows | ⭐⭐⭐ | ⭐⭐⭐ |
+
+**推荐使用 Docker Compose**:
+- 最简单的部署方式
+- 跨平台一致性
+- 易于管理和维护
+- 适合所有用户
+
+### 🎯 完整的部署矩阵
+
+| 平台 | Docker | 原生部署 | WSL2 |
+|------|--------|----------|------|
+| Linux | ✅ | ✅ | - |
+| macOS | ✅ | ✅ | - |
+| Windows | ✅ | - | ✅ |
+
+**所有平台都支持 Docker！**
+
+### 📚 文档更新
+
+1. **README.md** - 添加 Docker 快速开始（推荐）
+2. **README_CN.md** - 添加 Docker 快速开始（中文）
+3. **DOCKER_GUIDE.md** - 新增详细的 Docker 指南
+4. **.env.example** - 环境变量模板
+5. **.gitignore** - 忽略敏感文件
+6. 更新文件列表
+
+### 🎓 设计理念
+
+**为什么 Docker 是推荐方案？**
+
+1. **跨平台一致性**
+   - 相同的配置在所有平台运行
+   - 避免"在我机器上能跑"的问题
+
+2. **简化部署**
+   - 无需安装 Node.js、Nginx 等
+   - 一条命令启动所有服务
+
+3. **环境隔离**
+   - 不影响主机系统
+   - 多个项目互不干扰
+
+4. **易于维护**
+   - 一键更新
+   - 简单的备份和恢复
+
+5. **生产就绪**
+   - 包含所有必要配置
+   - 健康检查和自动重启
+
+---
+
 ## v2.3.0 (2026-03-06)
 
 ### 🪟 新增 Windows WSL2 支持

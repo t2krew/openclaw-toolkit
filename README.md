@@ -19,13 +19,55 @@
 
 ## 🚀 Quick Start
 
+### Docker (Recommended for all platforms) 🐳
+
+**The easiest way to deploy on any platform:**
+
 ```bash
 # Clone the repository
 git clone https://github.com/t2krew/openclaw-toolkit.git
 cd openclaw-toolkit
 
-# One-click deployment - that's it!
-bash openclaw-deploy.sh
+# Configure environment variables
+cp .env.example .env
+# Edit .env and add your API keys
+
+# Start all services
+docker-compose up -d
+
+# Access Control UI
+# http://localhost:9000/openclaw/
+```
+
+**Why Docker?**
+- ✅ Works on Linux, macOS, Windows
+- ✅ No need to install Node.js, Nginx, etc.
+- ✅ Isolated environment
+- ✅ Easy to manage and update
+- ✅ One command to start everything
+
+For detailed instructions, see [DOCKER_GUIDE.md](DOCKER_GUIDE.md).
+
+### Native Installation
+
+**Linux:**
+```bash
+# Clone the repository
+git clone https://github.com/t2krew/openclaw-toolkit.git
+cd openclaw-toolkit
+
+# One-click deployment
+sudo bash openclaw-deploy.sh
+```
+
+**macOS:**
+```bash
+# Clone the repository
+git clone https://github.com/t2krew/openclaw-toolkit.git
+cd openclaw-toolkit
+
+# One-click deployment
+bash openclaw-deploy-macos.sh
 ```
 
 ## 💻 System Requirements
@@ -132,13 +174,23 @@ For more information, see the [official installation guide](https://docs.opencla
 
 ## 📁 What's Included
 
-- **openclaw-deploy.sh** - Linux deployment script (production-ready)
-- **openclaw-deploy-macos.sh** - macOS deployment script (production-ready)
+### Deployment Scripts
+- **docker-compose.yml** - Docker Compose configuration (recommended)
+- **Dockerfile** - OpenClaw Gateway Docker image
+- **openclaw-deploy.sh** - Linux native deployment script
+- **openclaw-deploy-macos.sh** - macOS native deployment script
 - **install-wsl2.ps1** - Windows WSL2 setup helper (PowerShell)
+
+### Configuration Files
+- **nginx.conf** - Nginx reverse proxy configuration
+- **.env.example** - Environment variables template
+
+### Tools & Documentation
 - **openclaw-troubleshoot.sh** - Diagnostic and troubleshooting tool
 - **README.md** - English documentation
 - **README_CN.md** - Chinese documentation
-- **WINDOWS_WSL2_GUIDE.md** - Detailed Windows WSL2 guide
+- **DOCKER_GUIDE.md** - Docker deployment guide
+- **WINDOWS_WSL2_GUIDE.md** - Windows WSL2 guide
 - **CHANGELOG.md** - Version history
 - **LICENSE** - MIT License
 
