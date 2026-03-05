@@ -238,9 +238,22 @@ install_nodejs() {
     }
     
     # 动态获取 Node.js 路径
-    NODE_PATH=$(fnm current | xargs -I {} find /root/.local/share/fnm/node-versions -name "v{}*" -type d | head -1)
+    # 先尝试使用 fnm current
+    CURRENT_VERSION=$(fnm current 2>/dev/null || echo "")
+
+    if [ -n "$CURRENT_VERSION" ]; then
+        NODE_PATH=$(find /root/.local/share/fnm/node-versions -name "v${CURRENT_VERSION}*" -type d 2>/dev/null | head -1)
+    fi
+
+    # 如果上面的方法失败，尝试查找最新的 v24 版本
+    if [ -z "$NODE_PATH" ]; then
+        NODE_PATH=$(find /root/.local/share/fnm/node-versions -name "v24.*" -type d 2>/dev/null | sort -V | tail -1)
+    fi
+
     if [ -z "$NODE_PATH" ]; then
         log_error "无法获取 Node.js 路径"
+        log_info "尝试列出已安装的版本："
+        ls -la /root/.local/share/fnm/node-versions/ 2>/dev/null || true
         DEPLOYMENT_FAILED=1
         exit 1
     fi
