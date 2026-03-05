@@ -10,8 +10,9 @@
 
 - **True One-Click Deployment** - All configurations done correctly from the start
 - **No Manual Fixes Required** - Deploy once, use immediately
+- **Cross-Platform Support** - Works on Debian, Ubuntu, CentOS, RHEL
+- **Complete Dependency Management** - Automatically installs everything needed
 - **Intelligent Troubleshooting** - Automatic problem detection and diagnosis
-- **Complete Documentation** - From quick start to in-depth analysis
 - **Best Practices Built-in** - Based on real-world deployment experience
 
 ## 🚀 Quick Start
@@ -26,8 +27,11 @@ bash openclaw-deploy.sh
 ```
 
 **That's all you need!** The deployment script will:
-- ✅ Install all dependencies
-- ✅ Configure OpenClaw Gateway
+- ✅ Check network connection
+- ✅ Install all dependencies (including jq, nginx, etc.)
+- ✅ Install Node.js via fnm
+- ✅ Install OpenClaw Gateway
+- ✅ Configure OpenClaw with your API keys
 - ✅ Set up Nginx reverse proxy with correct WebSocket paths
 - ✅ Configure Tailscale routing (if selected)
 - ✅ Set up Gateway allowedOrigins automatically
@@ -36,27 +40,12 @@ bash openclaw-deploy.sh
 
 ## 📦 What's Included
 
-### Core Scripts
 - **openclaw-deploy.sh** - One-click deployment script (all you need!)
 - **openclaw-troubleshoot.sh** - Diagnostic and troubleshooting tool
-
-### Maintenance Tools (Optional)
-Located in `tools/` directory - only needed for existing installations or manual fixes:
-- `fix-tailscale-routing.sh` - Fix Tailscale routing (for old installations)
-- `fix-gateway-origin.sh` - Fix Gateway origin (for manual configurations)
-- `reset-gateway-token.sh` - Reset authentication token (if needed)
-
-**New users don't need these tools** - the deployment script handles everything correctly.
-
-### Documentation
-- `README.md` - This file (English)
-- `README_CN.md` - Chinese version
-- `DEPLOYMENT_SUMMARY.md` - Architecture and best practices
-- `POST_DEPLOYMENT_ISSUES.md` - Historical issues and solutions
-- `FINAL_REPORT.md` - Complete project summary
-- `CHANGELOG.md` - Version history
-- `QUICK_REFERENCE.txt` - Quick reference card
-- `INDEX.txt` - Toolkit index
+- **README.md** - English documentation
+- **README_CN.md** - Chinese documentation
+- **CHANGELOG.md** - Version history
+- **LICENSE** - MIT License
 
 ## 🌐 Architecture
 
@@ -71,27 +60,32 @@ Nginx (127.0.0.1:9000)
    └── /                  → Tailscale Web UI
 ```
 
-## 📚 Documentation
-
-- **Quick Start**: Just run `bash openclaw-deploy.sh`
-- **Troubleshooting**: Run `bash openclaw-troubleshoot.sh` if you encounter issues
-- **Architecture Details**: See [DEPLOYMENT_SUMMARY.md](DEPLOYMENT_SUMMARY.md)
-- **Maintenance Tools**: See [tools/README.md](tools/README.md) (for existing installations)
-
 ## 🎓 Built-in Best Practices
 
 The deployment script automatically implements:
+- ✅ **Dynamic Path Resolution** - No hardcoded paths, works with any Node.js version
+- ✅ **Cross-Platform Nginx** - Supports both Debian/Ubuntu and CentOS/RHEL directory structures
+- ✅ **Complete Error Handling** - Every step is checked, with cleanup on failure
 - ✅ **WebSocket Reverse Proxy** - Unified path prefix design
 - ✅ **API Key Management** - Environment variable approach
 - ✅ **Tailscale Configuration** - All traffic through Nginx with correct routing
 - ✅ **Gateway Security** - Token authentication and origin whitelist
 - ✅ **Service Management** - Systemd integration for reliability
 
-## 📊 Statistics
+## 🔧 Troubleshooting
 
-- **Total Files**: 15+
-- **One Command**: `bash openclaw-deploy.sh`
-- **Zero Manual Fixes**: Everything configured correctly from the start
+If you encounter any issues:
+
+```bash
+# Run the troubleshooting tool
+bash openclaw-troubleshoot.sh
+
+# Check service status
+systemctl status openclaw-gateway.service
+
+# View logs
+journalctl -u openclaw-gateway.service -f
+```
 
 ## 📞 Support
 
@@ -109,6 +103,6 @@ Developed during the deployment of OpenClaw Gateway on Raspberry Pi (ARM64).
 
 ---
 
-**Version**: v1.2.0
+**Version**: v2.0.0
 **Last Updated**: 2026-03-06
 **Repository**: https://github.com/t2krew/openclaw-toolkit

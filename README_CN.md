@@ -10,8 +10,9 @@
 
 - **真正的一键部署** - 从一开始就正确配置所有设置
 - **无需手动修复** - 部署一次，立即使用
+- **跨平台支持** - 支持 Debian、Ubuntu、CentOS、RHEL
+- **完整的依赖管理** - 自动安装所有需要的依赖
 - **智能故障排查** - 自动检测和诊断问题
-- **完整文档** - 从快速开始到深度分析
 - **内置最佳实践** - 基于实际部署经验
 
 ## 🚀 快速开始
@@ -26,8 +27,11 @@ bash openclaw-deploy.sh
 ```
 
 **这就是全部！** 部署脚本会：
-- ✅ 安装所有依赖
-- ✅ 配置 OpenClaw Gateway
+- ✅ 检查网络连接
+- ✅ 安装所有依赖（包括 jq、nginx 等）
+- ✅ 通过 fnm 安装 Node.js
+- ✅ 安装 OpenClaw Gateway
+- ✅ 使用你的 API 密钥配置 OpenClaw
 - ✅ 设置 Nginx 反向代理和正确的 WebSocket 路径
 - ✅ 配置 Tailscale 路由（如果选择）
 - ✅ 自动设置 Gateway allowedOrigins
@@ -36,27 +40,12 @@ bash openclaw-deploy.sh
 
 ## 📦 包含内容
 
-### 核心脚本
 - **openclaw-deploy.sh** - 一键部署脚本（你只需要这个！）
 - **openclaw-troubleshoot.sh** - 诊断和故障排查工具
-
-### 维护工具（可选）
-位于 `tools/` 目录 - 仅用于已有安装或手动修复：
-- `fix-tailscale-routing.sh` - 修复 Tailscale 路由（用于旧安装）
-- `fix-gateway-origin.sh` - 修复 Gateway Origin（用于手动配置）
-- `reset-gateway-token.sh` - 重置认证 Token（如果需要）
-
-**新用户不需要这些工具** - 部署脚本已正确处理所有配置。
-
-### 文档
-- `README.md` - 英文版
-- `README_CN.md` - 本文件（中文版）
-- `DEPLOYMENT_SUMMARY.md` - 架构和最佳实践
-- `POST_DEPLOYMENT_ISSUES.md` - 历史问题和解决方案
-- `FINAL_REPORT.md` - 完整项目总结
-- `CHANGELOG.md` - 更新日志
-- `QUICK_REFERENCE.txt` - 快速参考卡片
-- `INDEX.txt` - 工具集索引
+- **README.md** - 英文文档
+- **README_CN.md** - 中文文档
+- **CHANGELOG.md** - 更新日志
+- **LICENSE** - MIT 许可证
 
 ## 🌐 架构
 
@@ -71,27 +60,32 @@ Nginx (127.0.0.1:9000)
    └── /                  → Tailscale Web UI
 ```
 
-## 📚 文档
-
-- **快速开始**: 只需运行 `bash openclaw-deploy.sh`
-- **故障排查**: 遇到问题运行 `bash openclaw-troubleshoot.sh`
-- **架构细节**: 查看 [DEPLOYMENT_SUMMARY.md](DEPLOYMENT_SUMMARY.md)
-- **维护工具**: 查看 [tools/README.md](tools/README.md)（用于已有安装）
-
 ## 🎓 内置最佳实践
 
 部署脚本自动实现：
+- ✅ **动态路径解析** - 无硬编码路径，支持任何 Node.js 版本
+- ✅ **跨平台 Nginx** - 支持 Debian/Ubuntu 和 CentOS/RHEL 的目录结构
+- ✅ **完整的错误处理** - 每一步都检查，失败时清理
 - ✅ **WebSocket 反向代理** - 统一路径前缀设计
 - ✅ **API 密钥管理** - 环境变量方式
 - ✅ **Tailscale 配置** - 所有流量通过 Nginx，路由配置正确
 - ✅ **Gateway 安全** - Token 认证和来源白名单
 - ✅ **服务管理** - Systemd 集成确保可靠性
 
-## 📊 统计数据
+## 🔧 故障排查
 
-- **总文件数**: 15+
-- **一条命令**: `bash openclaw-deploy.sh`
-- **零手动修复**: 从一开始就正确配置所有设置
+如果遇到问题：
+
+```bash
+# 运行故障排查工具
+bash openclaw-troubleshoot.sh
+
+# 检查服务状态
+systemctl status openclaw-gateway.service
+
+# 查看日志
+journalctl -u openclaw-gateway.service -f
+```
 
 ## 📞 获取帮助
 
@@ -109,6 +103,6 @@ MIT License
 
 ---
 
-**版本**: v1.2.0
+**版本**: v2.0.0
 **更新时间**: 2026-03-06
 **仓库地址**: https://github.com/t2krew/openclaw-toolkit
