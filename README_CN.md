@@ -114,6 +114,10 @@ sudo bash openclaw-deploy.sh
 - **openclaw-deploy-macos.sh** - macOS 原生部署脚本
 - **install-wsl2.ps1** - Windows WSL2 设置助手（PowerShell）
 
+### 卸载脚本
+- **docker-uninstall.sh** - Docker 卸载脚本
+- **openclaw-uninstall.sh** - 原生卸载脚本（Linux/macOS）
+
 ### 配置文件
 - **nginx.conf** - Nginx 反向代理配置
 - **.env.example** - 环境变量模板
@@ -172,6 +176,31 @@ systemctl status openclaw-gateway.service
 
 # 检查服务状态（macOS）
 launchctl list | grep openclaw
+```
+
+## 🗑️ 卸载
+
+**Docker:**
+```bash
+# 运行 Docker 卸载脚本
+bash docker-uninstall.sh
+
+# 或手动卸载
+docker-compose down -v  # 删除容器和数据卷
+```
+
+**原生部署（Linux/macOS）:**
+```bash
+# 运行卸载脚本
+bash openclaw-uninstall.sh
+
+# 脚本会执行：
+# - 停止所有服务
+# - 删除服务文件
+# - 清理 Nginx 配置
+# - 卸载 OpenClaw Gateway
+# - 可选删除配置/数据
+# - 可选卸载依赖软件
 ```
 
 ## 📞 获取帮助

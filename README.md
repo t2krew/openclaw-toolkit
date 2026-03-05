@@ -114,6 +114,10 @@ For detailed Windows instructions, see [WINDOWS_WSL2_GUIDE.md](WINDOWS_WSL2_GUID
 - **openclaw-deploy-macos.sh** - macOS native deployment script
 - **install-wsl2.ps1** - Windows WSL2 setup helper (PowerShell)
 
+### Uninstall Scripts
+- **docker-uninstall.sh** - Docker uninstall script
+- **openclaw-uninstall.sh** - Native uninstall script (Linux/macOS)
+
 ### Configuration Files
 - **nginx.conf** - Nginx reverse proxy configuration
 - **.env.example** - Environment variables template
@@ -172,6 +176,31 @@ systemctl status openclaw-gateway.service
 
 # Check service status (macOS)
 launchctl list | grep openclaw
+```
+
+## 🗑️ Uninstall
+
+**Docker:**
+```bash
+# Run Docker uninstall script
+bash docker-uninstall.sh
+
+# Or manually
+docker-compose down -v  # Remove containers and volumes
+```
+
+**Native (Linux/macOS):**
+```bash
+# Run uninstall script
+bash openclaw-uninstall.sh
+
+# The script will:
+# - Stop all services
+# - Remove service files
+# - Clean up Nginx configuration
+# - Uninstall OpenClaw Gateway
+# - Optionally remove config/data
+# - Optionally uninstall dependencies
 ```
 
 ## 📞 Support
