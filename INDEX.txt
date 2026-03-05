@@ -1,45 +1,43 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                                                                              ║
-║                     OpenClaw 工具集 - 文件索引                              ║
-║                          版本: 1.0.0                                         ║
-║                        更新时间: 2026-03-06                                  ║
+║                     OpenClaw Deployment Toolkit - 索引                       ║
+║                                                                              ║
+║                          一键部署，开箱即用                                  ║
 ║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-📁 /root/openclaw-tool/
+📋 快速开始
+═══════════════════════════════════════════════════════════════════════════════
+
+新用户只需要一条命令:
+
+    bash openclaw-deploy.sh
+
+就这么简单！部署脚本会自动配置所有正确的设置。
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📁 项目结构
+═══════════════════════════════════════════════════════════════════════════════
+
+/root/openclaw-tool/
 │
-├── 📄 INDEX.txt                          ← 你在这里
-│   └── 本文件，工具集总览和快速导航
+├── 📖 README.md                          ⭐ 从这里开始
+│   └── 完整的使用指南和快速开始
 │
-├── 📘 README.md                          ⭐ 必读
-│   ├── 完整的使用指南
-│   ├── 常见问题解决方案
-│   ├── 安全配置建议
-│   └── 监控与维护方案
-│
-├── 📋 QUICK_REFERENCE.txt                ⭐ 日常使用
-│   ├── 快速命令参考
-│   ├── 常用操作速查
-│   └── 故障排查速查
-│
-├── 📊 DEPLOYMENT_SUMMARY.md              ⭐ 深度学习
-│   ├── 完整的部署复盘
-│   ├── 问题分析与解决方案
-│   ├── 架构设计说明
-│   ├── 最佳实践总结
-│   └── 经验教训汇总
-│
-├── 🚀 openclaw-deploy.sh                 ⭐ 一键部署
+├── 🚀 openclaw-deploy.sh                 ⭐ 一键部署脚本
 │   ├── 自动安装所有依赖
 │   ├── 配置 OpenClaw Gateway
 │   ├── 配置 Nginx 反向代理
+│   ├── 配置 Tailscale 路由（可选）
+│   ├── 配置 Gateway allowedOrigins
 │   ├── 创建 systemd 服务
-│   └── 生成配置报告
+│   └── 验证部署结果
 │   │
 │   └── 使用方法:
 │       bash openclaw-deploy.sh
 │
-├── 🔧 openclaw-troubleshoot.sh           ⭐ 故障排查
+├── 🔧 openclaw-troubleshoot.sh           ⭐ 故障排查工具
 │   ├── 自动检测常见问题
 │   ├── 提供修复建议
 │   ├── 收集诊断信息
@@ -49,172 +47,92 @@
 │       bash openclaw-troubleshoot.sh          # 交互模式
 │       bash openclaw-troubleshoot.sh --auto   # 自动检查
 │
-├── 🔧 fix-tailscale-routing.sh           ⭐ 快速修复
-│   ├── 修复 Tailscale 路由配置
-│   ├── 统一 80/443 端口代理
-│   └── 验证配置正确性
+├── 📂 tools/                             (维护工具 - 可选)
+│   ├── README.md                         说明文档
+│   ├── fix-tailscale-routing.sh         修复 Tailscale 路由
+│   ├── fix-gateway-origin.sh            修复 Gateway Origin
+│   └── reset-gateway-token.sh           重置 Gateway Token
 │   │
-│   └── 使用方法:
-│       bash fix-tailscale-routing.sh
+│   └── 注意: 新用户不需要这些工具！
+│       部署脚本已经正确配置了所有设置。
+│       这些工具仅用于维护已有安装。
 │
-├── 🔧 fix-gateway-origin.sh              ⭐ 快速修复
-│   ├── 修复 Gateway Origin 配置
-│   ├── 添加 Tailscale 域名到白名单
-│   └── 自动重启 Gateway
-│   │
-│   └── 使用方法:
-│       bash fix-gateway-origin.sh
+├── 📚 文档
+│   ├── DEPLOYMENT_SUMMARY.md            部署复盘和架构分析
+│   ├── POST_DEPLOYMENT_ISSUES.md        历史问题和解决方案
+│   ├── FINAL_REPORT.md                  项目总结报告
+│   ├── CHANGELOG.md                     更新日志
+│   ├── QUICK_REFERENCE.txt              快速参考卡片
+│   └── INDEX.txt                        本文件
 │
-├── 🔧 reset-gateway-token.sh             ⭐ 快速修复
-│   ├── 重置 Gateway Token
-│   ├── 生成新的安全 Token
-│   └── 保存配置信息
-│   │
-│   └── 使用方法:
-│       bash reset-gateway-token.sh
+├── 📝 生成的文件 (部署后)
+│   ├── config.txt                       配置信息
+│   └── deployment-report.txt            部署报告
 │
-├── 📝 config.txt                         (部署后生成)
-│   └── 保存部署时的配置信息（API 密钥、Token 等）
-│
-├── 📄 deployment-report.txt              (部署后生成)
-│   └── 详细的部署报告和系统状态
-│
-└── 📊 diagnostics-*.txt                  (故障排查时生成)
-    └── 诊断信息快照，用于问题分析
+└── 📄 其他
+    ├── LICENSE                          MIT 许可证
+    └── .gitignore                       Git 忽略规则
 
 ═══════════════════════════════════════════════════════════════════════════════
 
-🎯 快速开始指南
+🎯 使用流程
+═══════════════════════════════════════════════════════════════════════════════
 
-┌─ 第一次使用 ─────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│  1. 阅读 README.md 了解整体情况                                              │
-│     cat README.md                                                            │
-│                                                                              │
-│  2. 运行一键部署脚本                                                         │
-│     bash openclaw-deploy.sh                                                  │
-│                                                                              │
-│  3. 查看部署报告                                                             │
-│     cat deployment-report.txt                                                │
-│                                                                              │
-│  4. 保存快速参考卡片                                                         │
-│     cat QUICK_REFERENCE.txt                                                  │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
+新用户:
+  1. 阅读 README.md
+  2. 运行 bash openclaw-deploy.sh
+  3. 完成！开始使用
 
-┌─ 日常使用 ───────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│  • 需要快速查命令？                                                          │
-│    → cat QUICK_REFERENCE.txt                                                 │
-│                                                                              │
-│  • 遇到问题了？                                                              │
-│    → bash openclaw-troubleshoot.sh                                           │
-│                                                                              │
-│  • 想了解某个配置的原理？                                                    │
-│    → cat DEPLOYMENT_SUMMARY.md                                               │
-│                                                                              │
-│  • 需要详细的操作步骤？                                                      │
-│    → cat README.md                                                           │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
+遇到问题:
+  1. 运行 bash openclaw-troubleshoot.sh
+  2. 查看 POST_DEPLOYMENT_ISSUES.md
+  3. 如果需要，查看 tools/README.md
 
-┌─ 深入学习 ───────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│  推荐阅读顺序:                                                               │
-│                                                                              │
-│  1. README.md                    - 了解工具集的功能和使用方法               │
-│  2. DEPLOYMENT_SUMMARY.md        - 深入理解部署架构和最佳实践               │
-│  3. QUICK_REFERENCE.txt          - 熟悉常用命令                             │
-│  4. openclaw-deploy.sh           - 学习自动化部署流程                       │
-│  5. openclaw-troubleshoot.sh     - 学习故障排查方法                         │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
+深入学习:
+  1. 阅读 DEPLOYMENT_SUMMARY.md 了解架构
+  2. 阅读 FINAL_REPORT.md 了解项目背景
+  3. 查看 CHANGELOG.md 了解更新历史
 
 ═══════════════════════════════════════════════════════════════════════════════
 
-📚 文档层次结构
-
-Level 1: 快速参考
-  └── QUICK_REFERENCE.txt          最常用的命令和操作
-
-Level 2: 使用指南
-  └── README.md                    完整的使用说明和常见问题
-
-Level 3: 深度分析
-  └── DEPLOYMENT_SUMMARY.md        部署复盘和技术细节
-
-Level 4: 自动化工具
-  ├── openclaw-deploy.sh           一键部署脚本
-  └── openclaw-troubleshoot.sh     故障排查工具
-
+💡 设计理念
 ═══════════════════════════════════════════════════════════════════════════════
 
-🎓 学习路径建议
+✅ 一键部署
+  - 一条命令完成所有配置
+  - 从一开始就配置正确
+  - 无需手动修复
 
-┌─ 初学者 ─────────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│  1. 运行 openclaw-deploy.sh 完成部署                                         │
-│  2. 阅读 README.md 的"快速开始"部分                                          │
-│  3. 保存 QUICK_REFERENCE.txt 作为日常参考                                    │
-│  4. 遇到问题时运行 openclaw-troubleshoot.sh                                  │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
+✅ 开箱即用
+  - 部署完成后立即可用
+  - 不需要额外的配置步骤
+  - 不需要运行修复脚本
 
-┌─ 进阶用户 ───────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│  1. 阅读 DEPLOYMENT_SUMMARY.md 了解架构设计                                  │
-│  2. 学习脚本源码理解自动化流程                                               │
-│  3. 根据需求修改配置和脚本                                                   │
-│  4. 配置监控和自动化维护                                                     │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
-
-┌─ 运维人员 ───────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│  1. 深入研究 DEPLOYMENT_SUMMARY.md 的问题分析部分                            │
-│  2. 定制 openclaw-troubleshoot.sh 添加自定义检查                             │
-│  3. 配置自动备份和健康检查（参考 README.md）                                 │
-│  4. 建立监控告警机制                                                         │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
-
-═══════════════════════════════════════════════════════════════════════════════
-
-💡 使用技巧
-
-• 将 QUICK_REFERENCE.txt 添加到 shell 别名:
-  echo "alias ocref='cat /root/openclaw-tool/QUICK_REFERENCE.txt'" >> ~/.bashrc
-
-• 创建快捷命令:
-  echo "alias ocdeploy='bash /root/openclaw-tool/openclaw-deploy.sh'" >> ~/.bashrc
-  echo "alias ocfix='bash /root/openclaw-tool/openclaw-troubleshoot.sh'" >> ~/.bashrc
-
-• 定期运行健康检查:
-  bash /root/openclaw-tool/openclaw-troubleshoot.sh --auto
+✅ 维护工具分离
+  - 修复工具放在 tools/ 目录
+  - 仅用于维护已有安装
+  - 新用户不需要关心
 
 ═══════════════════════════════════════════════════════════════════════════════
 
 📞 获取帮助
+═══════════════════════════════════════════════════════════════════════════════
 
-• 官方文档:     https://docs.openclaw.ai/
-• 故障排查:     https://docs.openclaw.ai/troubleshooting
-• 本地文档:     cat /root/openclaw-tool/README.md
-• 快速参考:     cat /root/openclaw-tool/QUICK_REFERENCE.txt
+本地文档:
+  - 快速参考:    cat QUICK_REFERENCE.txt
+  - 使用指南:    cat README.md
+  - 架构分析:    cat DEPLOYMENT_SUMMARY.md
+  - 问题解决:    cat POST_DEPLOYMENT_ISSUES.md
+
+官方文档:
+  - OpenClaw:    https://docs.openclaw.ai/
+  - 故障排查:    https://docs.openclaw.ai/troubleshooting
+  - GitHub:      https://github.com/t2krew/openclaw-toolkit
 
 ═══════════════════════════════════════════════════════════════════════════════
 
-🎉 工具集特点
-
-✅ 一键部署      - 自动化安装和配置
-✅ 故障排查      - 智能诊断和修复建议
-✅ 完整文档      - 从入门到精通
-✅ 最佳实践      - 基于实际部署经验
-✅ 持续维护      - 包含监控和备份方案
-
-═══════════════════════════════════════════════════════════════════════════════
-
-版本历史:
-  v1.0.0 (2026-03-06) - 初始版本
-
+版本: v1.2.0
+更新: 2026-03-06
 维护者: Claude (Kiro AI Assistant)
 
+═══════════════════════════════════════════════════════════════════════════════

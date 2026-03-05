@@ -1,63 +1,62 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                     OpenClaw 快速参考卡片 v1.0                              ║
+║                                                                              ║
+║                     OpenClaw Deployment Toolkit                              ║
+║                          快速参考卡片                                        ║
+║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-┌─ 🚀 快速命令 ────────────────────────────────────────────────────────────────┐
+┌─ 🚀 快速开始 ────────────────────────────────────────────────────────────────┐
 │                                                                              │
-│  一键部署:        bash /root/openclaw-tool/openclaw-deploy.sh               │
-│  故障排查:        bash /root/openclaw-tool/openclaw-troubleshoot.sh         │
-│  查看文档:        cat /root/openclaw-tool/README.md                         │
+│  新用户只需要一条命令:                                                       │
 │                                                                              │
-│  快速修复:                                                                   │
-│    Tailscale:     bash /root/openclaw-tool/fix-tailscale-routing.sh         │
-│    Origin:        bash /root/openclaw-tool/fix-gateway-origin.sh            │
-│    Token:         bash /root/openclaw-tool/reset-gateway-token.sh           │
+│    bash openclaw-deploy.sh                                                   │
+│                                                                              │
+│  就这么简单！部署脚本会自动配置所有正确的设置。                              │
 │                                                                              │
 └──────────────────────────────────────────────────────────────────────────────┘
 
-┌─ 📊 服务管理 ────────────────────────────────────────────────────────────────┐
+┌─ 📋 核心命令 ────────────────────────────────────────────────────────────────┐
 │                                                                              │
-│  查看状态:        openclaw status                                           │
-│  查看日志:        openclaw logs --follow                                    │
-│  测试连接:        openclaw gateway probe                                    │
-│                                                                              │
-│  启动服务:        systemctl start openclaw-gateway.service                  │
-│  停止服务:        systemctl stop openclaw-gateway.service                   │
-│  重启服务:        systemctl restart openclaw-gateway.service                │
-│  查看日志:        journalctl -u openclaw-gateway.service -f                 │
+│  一键部署:        bash openclaw-deploy.sh                                    │
+│  故障排查:        bash openclaw-troubleshoot.sh                              │
+│  查看索引:        cat INDEX.txt                                              │
+│  查看文档:        cat README.md                                              │
 │                                                                              │
 └──────────────────────────────────────────────────────────────────────────────┘
 
-┌─ 🔧 配置管理 ────────────────────────────────────────────────────────────────┐
+┌─ 🔧 OpenClaw 管理 ───────────────────────────────────────────────────────────┐
 │                                                                              │
-│  查看配置:        openclaw config get <path>                                │
-│  设置配置:        openclaw config set <path> <value>                        │
-│  查看模型:        openclaw models status                                    │
+│  查看状态:        openclaw status                                            │
+│  查看日志:        openclaw logs --follow                                     │
+│  测试连接:        openclaw gateway probe                                     │
+│  查看模型:        openclaw models status                                     │
 │                                                                              │
-│  配置文件:        /root/.openclaw/openclaw.json                             │
-│  Nginx 配置:      /etc/nginx/sites-available/openclaw-gateway.conf          │
+│  配置管理:                                                                   │
+│    openclaw config get <path>                                                │
+│    openclaw config set <path> <value>                                        │
 │                                                                              │
 └──────────────────────────────────────────────────────────────────────────────┘
 
-┌─ 🌐 访问地址 ────────────────────────────────────────────────────────────────┐
+┌─ 🔄 服务管理 ────────────────────────────────────────────────────────────────┐
 │                                                                              │
-│  Control UI (本地):   http://127.0.0.1:18789/openclaw/                      │
-│  Control UI (Nginx):  http://127.0.0.1:9000/openclaw/                       │
-│  WebSocket:           ws://127.0.0.1:9000/openclaw/ws                       │
-│  Tailscale:           https://your-device.tailscale.net/openclaw/           │
+│  启动服务:        systemctl start openclaw-gateway.service                   │
+│  停止服务:        systemctl stop openclaw-gateway.service                    │
+│  重启服务:        systemctl restart openclaw-gateway.service                 │
+│  查看状态:        systemctl status openclaw-gateway.service                  │
+│  查看日志:        journalctl -u openclaw-gateway.service -f                  │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ 🌐 Nginx 管理 ──────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  测试配置:        nginx -t                                                   │
+│  重载配置:        systemctl reload nginx                                     │
+│  重启服务:        systemctl restart nginx                                    │
+│  查看日志:        tail -f /var/log/nginx/openclaw-error.log                 │
 │                                                                              │
 └──────────────────────────────────────────────────────────────────────────────┘
 
 ┌─ 🐛 常见问题 ────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│  Tailscale 路由错误:                                                         │
-│    → bash /root/openclaw-tool/fix-tailscale-routing.sh                      │
-│                                                                              │
-│  Origin 不允许:                                                              │
-│    → bash /root/openclaw-tool/fix-gateway-origin.sh                         │
-│                                                                              │
-│  认证失败锁定:                                                               │
-│    → bash /root/openclaw-tool/reset-gateway-token.sh                        │
 │                                                                              │
 │  Gateway 无法连接:                                                           │
 │    → systemctl restart openclaw-gateway.service                             │
@@ -74,64 +73,83 @@
 │  Telegram 不响应:                                                            │
 │    → openclaw pairing list                                                  │
 │    → openclaw pairing approve <request-id>                                  │
-│    → openclaw config set channels.telegram.allowFrom '["USER_ID"]'          │
 │                                                                              │
 └──────────────────────────────────────────────────────────────────────────────┘
 
-┌─ 📝 日志位置 ────────────────────────────────────────────────────────────────┐
+┌─ 🛠️ 维护工具 (可选) ─────────────────────────────────────────────────────────┐
 │                                                                              │
-│  OpenClaw:        /tmp/openclaw/openclaw-YYYY-MM-DD.log                     │
-│  systemd:         journalctl -u openclaw-gateway.service                    │
-│  Nginx Access:    /var/log/nginx/openclaw-access.log                        │
-│  Nginx Error:     /var/log/nginx/openclaw-error.log                         │
+│  注意: 新用户不需要这些工具！                                                │
+│        部署脚本已经正确配置了所有设置。                                      │
 │                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
-
-┌─ 🔐 安全配置 ────────────────────────────────────────────────────────────────┐
+│  这些工具仅用于维护已有安装:                                                 │
 │                                                                              │
-│  Gateway Token:   openclaw config get gateway.auth.token                    │
-│  更新 Token:      openclaw config set gateway.auth.token "$(openssl rand -hex 24)"
+│    bash tools/fix-tailscale-routing.sh    # 修复 Tailscale 路由             │
+│    bash tools/fix-gateway-origin.sh       # 修复 Gateway Origin             │
+│    bash tools/reset-gateway-token.sh      # 重置 Gateway Token              │
 │                                                                              │
-│  Telegram 白名单:                                                            │
-│    1. 发送消息给 Bot                                                         │
-│    2. openclaw logs --follow  (获取 USER_ID)                                │
-│    3. openclaw config set channels.telegram.allowFrom '["USER_ID"]'         │
+│  详细说明: cat tools/README.md                                               │
 │                                                                              │
 └──────────────────────────────────────────────────────────────────────────────┘
 
-┌─ 🎯 Tailscale 配置 ──────────────────────────────────────────────────────────┐
+┌─ 📁 重要文件 ────────────────────────────────────────────────────────────────┐
 │                                                                              │
-│  启动:            tailscale up                                              │
-│  配置代理:        tailscale serve https / http://127.0.0.1:9000             │
-│  查看状态:        tailscale status                                          │
-│  查看地址:        tailscale serve status                                    │
+│  配置文件:                                                                   │
+│    /root/.openclaw/openclaw.json                                             │
+│    /etc/nginx/sites-available/openclaw-gateway.conf                          │
+│    /etc/systemd/system/openclaw-gateway.service                              │
 │                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
-
-┌─ 📚 文档链接 ────────────────────────────────────────────────────────────────┐
+│  日志文件:                                                                   │
+│    /tmp/openclaw/openclaw-YYYY-MM-DD.log                                     │
+│    /var/log/nginx/openclaw-access.log                                        │
+│    /var/log/nginx/openclaw-error.log                                         │
 │                                                                              │
-│  官方文档:        https://docs.openclaw.ai/                                 │
-│  Telegram:        https://docs.openclaw.ai/zh-CN/channels/telegram          │
-│  Gateway:         https://docs.openclaw.ai/zh-CN/gateway                    │
-│  故障排查:        https://docs.openclaw.ai/troubleshooting                  │
-│                                                                              │
-│  本地文档:        /root/openclaw-tool/README.md                             │
-│  部署总结:        /root/openclaw-tool/DEPLOYMENT_SUMMARY.md                 │
+│  部署信息:                                                                   │
+│    /root/openclaw-tool/config.txt                                            │
+│    /root/openclaw-tool/deployment-report.txt                                 │
 │                                                                              │
 └──────────────────────────────────────────────────────────────────────────────┘
 
-┌─ 💡 最佳实践 ────────────────────────────────────────────────────────────────┐
+┌─ 🌐 访问地址 ────────────────────────────────────────────────────────────────┐
 │                                                                              │
-│  ✅ 使用环境变量配置 API 密钥（不要用 auth-profiles.json）                  │
-│  ✅ 定期备份配置文件                                                         │
-│  ✅ 配置 Telegram 白名单（不要使用 open 模式）                               │
-│  ✅ 使用 Token 认证保护 Gateway                                              │
-│  ✅ 通过 Tailscale 实现安全的外部访问                                        │
-│  ✅ 定期查看日志和运行故障排查工具                                           │
+│  本地访问:                                                                   │
+│    Control UI:    http://127.0.0.1:9000/openclaw/                            │
+│    WebSocket:     ws://127.0.0.1:9000/openclaw/ws                            │
+│                                                                              │
+│  Tailscale 访问 (如果已配置):                                                │
+│    Control UI:    https://your-device.tailscale.net/openclaw/               │
+│    WebSocket:     wss://your-device.tailscale.net/openclaw/ws               │
 │                                                                              │
 └──────────────────────────────────────────────────────────────────────────────┘
 
-╔══════════════════════════════════════════════════════════════════════════════╗
-║  提示: 将此文件打印或保存为书签，方便日常使用                                ║
-║  更新时间: 2026-03-06                                                        ║
-╚══════════════════════════════════════════════════════════════════════════════╝
+┌─ 📚 文档 ────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  快速参考:        cat QUICK_REFERENCE.txt        (本文件)                    │
+│  使用指南:        cat README.md                                              │
+│  工具索引:        cat INDEX.txt                                              │
+│  架构分析:        cat DEPLOYMENT_SUMMARY.md                                  │
+│  问题解决:        cat POST_DEPLOYMENT_ISSUES.md                              │
+│  项目总结:        cat FINAL_REPORT.md                                        │
+│  更新日志:        cat CHANGELOG.md                                           │
+│                                                                              │
+│  官方文档:        https://docs.openclaw.ai/                                  │
+│  GitHub:          https://github.com/t2krew/openclaw-toolkit                 │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ 💡 提示 ────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  ✅ 新用户只需运行: bash openclaw-deploy.sh                                  │
+│  ✅ 部署脚本会自动配置所有正确的设置                                         │
+│  ✅ 无需运行任何修复脚本                                                     │
+│  ✅ 部署完成后立即可用                                                       │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+
+版本: v1.2.0
+更新: 2026-03-06
+维护者: Claude (Kiro AI Assistant)
+项目: https://github.com/t2krew/openclaw-toolkit
+
+═══════════════════════════════════════════════════════════════════════════════
