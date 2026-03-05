@@ -18,7 +18,7 @@
 #   bash openclaw-deploy.sh
 #
 # 环境要求:
-# - Linux (Debian/Ubuntu/CentOS/RHEL)
+# - Linux (Debian/Ubuntu/CentOS/RHEL/Arch)
 # - Root 权限
 # - 网络连接
 ################################################################################
@@ -110,8 +110,11 @@ detect_system() {
     elif [ "$OS" = "centos" ] || [ "$OS" = "rhel" ]; then
         NGINX_CONF_DIR="/etc/nginx/conf.d"
         NGINX_ENABLED_DIR=""
+    elif [ "$OS" = "arch" ] || [ "$OS" = "manjaro" ]; then
+        NGINX_CONF_DIR="/etc/nginx/conf.d"
+        NGINX_ENABLED_DIR=""
     else
-        log_warning "未知系统类型: $OS"
+        log_warning "未知系统类型: $OS，使用默认配置"
         NGINX_CONF_DIR="/etc/nginx/conf.d"
         NGINX_ENABLED_DIR=""
     fi
@@ -120,7 +123,7 @@ detect_system() {
 # 安装依赖
 install_dependencies() {
     log_info "安装系统依赖..."
-    
+
     if [ "$OS" = "debian" ] || [ "$OS" = "ubuntu" ]; then
         apt-get update || {
             log_error "apt-get update 失败"
@@ -138,11 +141,23 @@ install_dependencies() {
             DEPLOYMENT_FAILED=1
             exit 1
         }
+    elif [ "$OS" = "arch" ] || [ "$OS" = "manjaro" ]; then
+        pacman -Sy --noconfirm || {
+            log_error "pacman -Sy 失败"
+            DEPLOYMENT_FAILED=1
+            exit 1
+        }
+        pacman -S --noconfirm curl wget git base-devel nginx jq || {
+            log_error "依赖安装失败"
+            DEPLOYMENT_FAILED=1
+            exit 1
+        }
     else
         log_error "不支持的系统类型: $OS"
+        log_info "支持的系统: Debian, Ubuntu, CentOS, RHEL, Arch Linux"
         exit 1
     fi
-    
+
     log_success "系统依赖安装完成"
 }
 

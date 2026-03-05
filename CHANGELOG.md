@@ -1,5 +1,57 @@
 # OpenClaw 工具集更新日志
 
+## v2.1.0 (2026-03-06)
+
+### 🎯 新增 Arch Linux 支持
+
+#### 跨平台扩展
+基于用户需求："支持 Ubuntu、Debian、CentOS、RHEL、Arch、macOS、Windows"
+
+**新增支持**:
+
+1. **Arch Linux / Manjaro**
+   - 包管理器: pacman
+   - 依赖安装: pacman -S curl wget git base-devel nginx jq
+   - Nginx 配置: /etc/nginx/conf.d/
+   - systemd: 完全支持
+   - 状态: ✅ 已实现
+
+**当前支持的系统**:
+- ✅ Debian
+- ✅ Ubuntu
+- ✅ CentOS
+- ✅ RHEL
+- ✅ Arch Linux
+- ✅ Manjaro
+
+**暂不支持的系统**:
+- ❌ macOS (需要 launchd 而非 systemd，复杂度高)
+- ❌ Windows (建议使用 WSL2 运行 Linux 版本)
+
+### 📝 技术说明
+
+**为什么不支持 macOS**:
+- macOS 不使用 systemd，需要使用 launchd
+- Nginx 配置路径不同
+- 主要用于开发环境，生产环境很少使用
+- 如需 macOS 支持，可以后续添加
+
+**为什么不支持 Windows**:
+- Windows 路径系统完全不同
+- 没有原生的包管理器（需要 choco/winget）
+- 没有 systemd
+- 建议使用 WSL2 运行 Ubuntu/Debian 版本
+- WSL2 提供完整的 Linux 环境，体验更好
+
+### 🔧 改进内容
+
+1. **detect_system()** - 添加 Arch/Manjaro 检测
+2. **install_dependencies()** - 添加 pacman 包管理器支持
+3. **README.md** - 更新支持的系统列表
+4. **README_CN.md** - 更新支持的系统列表
+
+---
+
 ## v2.0.0 (2026-03-06)
 
 ### 🎯 重大改进 - 生产就绪版本

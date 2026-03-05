@@ -10,7 +10,7 @@
 
 - **True One-Click Deployment** - All configurations done correctly from the start
 - **No Manual Fixes Required** - Deploy once, use immediately
-- **Cross-Platform Support** - Works on Debian, Ubuntu, CentOS, RHEL
+- **Cross-Platform Support** - Works on Debian, Ubuntu, CentOS, RHEL, Arch Linux
 - **Complete Dependency Management** - Automatically installs everything needed
 - **Intelligent Troubleshooting** - Automatic problem detection and diagnosis
 - **Best Practices Built-in** - Based on real-world deployment experience
