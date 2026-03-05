@@ -41,23 +41,38 @@ bash openclaw-deploy.sh
 - ✅ **Arch Linux**
 - ✅ **Manjaro**
 
-### macOS 和 Windows 用户
+### macOS 支持
 
-本工具专为 **Linux 服务器生产环境部署**设计，包括 Nginx、Tailscale 和 systemd。
+**新功能！** 我们现在提供完整的 macOS 部署脚本，具备完整的生产环境功能：
 
-**如需在 macOS 或 Windows（开发环境）安装**，请使用 OpenClaw 官方安装器：
+```bash
+# macOS 部署（包括 Nginx、Tailscale、launchd）
+bash openclaw-deploy-macos.sh
+```
 
-- **macOS**:
-  ```bash
-  curl -fsSL https://openclaw.ai/install.sh | bash
-  ```
+**macOS 功能特性:**
+- ✅ 完整的生产环境部署（与 Linux 相同）
+- ✅ Nginx 反向代理配置
+- ✅ Tailscale 网络设置
+- ✅ launchd 服务管理（代替 systemd）
+- ✅ Homebrew 包管理
+- ✅ 所有安全配置
+
+**macOS 要求:**
+- macOS 10.15 (Catalina) 或更高版本
+- 管理员权限
+- 网络连接
+
+### Windows 用户
+
+**如需在 Windows（开发环境）安装**，请使用 OpenClaw 官方安装器：
 
 - **Windows**:
   ```powershell
   iwr -useb https://openclaw.ai/install.ps1 | iex
   ```
 
-- **Windows (WSL2)**: 可以在 WSL2 的 Ubuntu/Debian 中使用本工具
+- **Windows (WSL2)**: 可以在 WSL2 的 Ubuntu/Debian 中使用 Linux 部署脚本
 
 更多信息请参考[官方安装指南](https://docs.openclaw.ai/zh-CN/install)。
 
@@ -85,7 +100,8 @@ bash openclaw-deploy.sh
 
 ## 📁 包含内容
 
-- **openclaw-deploy.sh** - 一键部署脚本（你只需要这个！）
+- **openclaw-deploy.sh** - Linux 部署脚本（生产就绪）
+- **openclaw-deploy-macos.sh** - macOS 部署脚本（生产就绪）
 - **openclaw-troubleshoot.sh** - 诊断和故障排查工具
 - **README.md** - 英文文档
 - **README_CN.md** - 中文文档

@@ -41,23 +41,38 @@ This toolkit supports the following Linux distributions:
 - ✅ **Arch Linux**
 - ✅ **Manjaro**
 
-### macOS and Windows Users
+### macOS Support
 
-This toolkit is designed for **Linux server production deployments** with Nginx, Tailscale, and systemd.
+**NEW!** We now provide a complete macOS deployment script with full production features:
 
-**For macOS or Windows (development environments)**, please use the official OpenClaw installer:
+```bash
+# macOS deployment (includes Nginx, Tailscale, launchd)
+bash openclaw-deploy-macos.sh
+```
 
-- **macOS**:
-  ```bash
-  curl -fsSL https://openclaw.ai/install.sh | bash
-  ```
+**Features on macOS:**
+- ✅ Complete production deployment (same as Linux)
+- ✅ Nginx reverse proxy configuration
+- ✅ Tailscale network setup
+- ✅ launchd service management (instead of systemd)
+- ✅ Homebrew package management
+- ✅ All security configurations
+
+**macOS Requirements:**
+- macOS 10.15 (Catalina) or later
+- Administrator privileges
+- Internet connection
+
+### Windows Users
+
+**For Windows (development environments)**, please use the official OpenClaw installer:
 
 - **Windows**:
   ```powershell
   iwr -useb https://openclaw.ai/install.ps1 | iex
   ```
 
-- **Windows (WSL2)**: You can use this toolkit inside WSL2 with Ubuntu/Debian
+- **Windows (WSL2)**: You can use the Linux deployment script inside WSL2 with Ubuntu/Debian
 
 For more information, see the [official installation guide](https://docs.openclaw.ai/install).
 
@@ -85,7 +100,8 @@ For more information, see the [official installation guide](https://docs.opencla
 
 ## 📁 What's Included
 
-- **openclaw-deploy.sh** - One-click deployment script (all you need!)
+- **openclaw-deploy.sh** - Linux deployment script (production-ready)
+- **openclaw-deploy-macos.sh** - macOS deployment script (production-ready)
 - **openclaw-troubleshoot.sh** - Diagnostic and troubleshooting tool
 - **README.md** - English documentation
 - **README_CN.md** - Chinese documentation

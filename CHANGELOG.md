@@ -1,5 +1,86 @@
 # OpenClaw 工具集更新日志
 
+## v2.2.0 (2026-03-06)
+
+### 🎉 新增 macOS 完整支持
+
+#### 完整的 macOS 生产环境部署
+
+基于用户需求："我想在 mac 系统中同样跑一套这样的系统"
+
+**新增功能**:
+
+1. **macOS 部署脚本** (`openclaw-deploy-macos.sh`)
+   - 完整的生产环境部署（与 Linux 版本功能对等）
+   - Nginx 反向代理配置
+   - Tailscale 网络设置
+   - launchd 服务管理（macOS 的 systemd 替代）
+   - Homebrew 包管理
+   - 所有安全配置
+
+2. **技术实现**
+   - 使用 launchd 代替 systemd
+   - Nginx 配置路径: `/usr/local/etc/nginx/servers/`
+   - 日志路径: `~/Library/Logs/`
+   - 服务配置: `~/Library/LaunchAgents/com.openclaw.gateway.plist`
+   - 使用 Homebrew 管理依赖
+
+3. **macOS 特殊处理**
+   - 设置 `SHARP_IGNORE_GLOBAL_LIBVIPS=1` 避免 sharp 编译问题
+   - 自动检测 Apple Silicon (M1/M2) 和 Intel 架构
+   - 使用 `brew services` 管理 Nginx
+   - 完整的权限处理
+
+**支持的系统**:
+- ✅ macOS 10.15 (Catalina) 或更高版本
+- ✅ 支持 Intel 和 Apple Silicon (M1/M2/M3)
+
+**使用方法**:
+```bash
+# macOS 部署
+bash openclaw-deploy-macos.sh
+```
+
+**功能对比**:
+
+| 功能 | Linux 版本 | macOS 版本 |
+|------|-----------|-----------|
+| OpenClaw 安装 | ✅ | ✅ |
+| Nginx 配置 | ✅ | ✅ |
+| Tailscale 配置 | ✅ | ✅ |
+| 服务管理 | systemd | launchd |
+| 包管理器 | apt/yum/pacman | Homebrew |
+| 自动启动 | ✅ | ✅ |
+| 日志管理 | ✅ | ✅ |
+| 完整配置 | ✅ | ✅ |
+
+### 📝 文档更新
+
+1. **README.md** - 添加 macOS 部署说明
+2. **README_CN.md** - 添加 macOS 部署说明（中文）
+3. 更新系统支持列表
+
+### 🎓 设计理念
+
+**为什么创建独立的 macOS 脚本？**
+
+1. **技术差异**
+   - macOS 使用 launchd，Linux 使用 systemd
+   - 不同的配置路径和日志位置
+   - 不同的包管理器
+
+2. **保持简洁**
+   - 独立脚本避免复杂的条件判断
+   - 每个脚本专注于一个平台
+   - 更容易维护和调试
+
+3. **功能对等**
+   - macOS 版本提供与 Linux 相同的功能
+   - 完整的生产环境部署
+   - 不是简化版，是完整移植
+
+---
+
 ## v2.1.0 (2026-03-06)
 
 ### 🎯 新增 Arch Linux 支持
