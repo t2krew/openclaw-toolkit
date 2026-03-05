@@ -4,7 +4,9 @@
 
 ---
 
-**One-click deployment toolkit for OpenClaw Gateway** - Automated installation, configuration, and management.
+**Production-ready deployment toolkit for OpenClaw Gateway on Linux servers** - Automated installation, configuration, and management with Nginx, Tailscale, and systemd.
+
+> **Note**: This toolkit is designed for **Linux server production deployments**. For macOS/Windows development environments, please use the [official installer](https://docs.openclaw.ai/install).
 
 ## 🎯 Features
 
@@ -26,6 +28,43 @@ cd openclaw-toolkit
 bash openclaw-deploy.sh
 ```
 
+## 💻 System Requirements
+
+### Supported Linux Distributions
+
+This toolkit supports the following Linux distributions:
+
+- ✅ **Debian** 10+
+- ✅ **Ubuntu** 20.04+
+- ✅ **CentOS** 7+
+- ✅ **RHEL** 8+
+- ✅ **Arch Linux**
+- ✅ **Manjaro**
+
+### macOS and Windows Users
+
+This toolkit is designed for **Linux server production deployments** with Nginx, Tailscale, and systemd.
+
+**For macOS or Windows (development environments)**, please use the official OpenClaw installer:
+
+- **macOS**:
+  ```bash
+  curl -fsSL https://openclaw.ai/install.sh | bash
+  ```
+
+- **Windows**:
+  ```powershell
+  iwr -useb https://openclaw.ai/install.ps1 | iex
+  ```
+
+- **Windows (WSL2)**: You can use this toolkit inside WSL2 with Ubuntu/Debian
+
+For more information, see the [official installation guide](https://docs.openclaw.ai/install).
+
+## 📦 What This Toolkit Does
+
+## 📦 What This Toolkit Does
+
 **That's all you need!** The deployment script will:
 - ✅ Check network connection
 - ✅ Install all dependencies (including jq, nginx, etc.)
@@ -38,7 +77,13 @@ bash openclaw-deploy.sh
 - ✅ Create systemd service for auto-start
 - ✅ Verify everything works
 
-## 📦 What's Included
+**This is a complete production deployment**, not just an installer. It includes:
+- Nginx reverse proxy configuration
+- Tailscale network setup
+- systemd service management
+- Security configurations (token auth, origin whitelist)
+
+## 📁 What's Included
 
 - **openclaw-deploy.sh** - One-click deployment script (all you need!)
 - **openclaw-troubleshoot.sh** - Diagnostic and troubleshooting tool

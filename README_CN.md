@@ -4,7 +4,9 @@
 
 ---
 
-**OpenClaw Gateway 一键部署工具** - 自动化安装、配置和管理。
+**Linux 服务器生产环境部署工具** - 自动化安装、配置和管理，包括 Nginx、Tailscale 和 systemd。
+
+> **注意**: 本工具专为 **Linux 服务器生产环境部署**设计。如需在 macOS/Windows 开发环境安装，请使用[官方安装器](https://docs.openclaw.ai/zh-CN/install)。
 
 ## 🎯 特性
 
@@ -26,6 +28,43 @@ cd openclaw-toolkit
 bash openclaw-deploy.sh
 ```
 
+## 💻 系统要求
+
+### 支持的 Linux 发行版
+
+本工具支持以下 Linux 发行版：
+
+- ✅ **Debian** 10+
+- ✅ **Ubuntu** 20.04+
+- ✅ **CentOS** 7+
+- ✅ **RHEL** 8+
+- ✅ **Arch Linux**
+- ✅ **Manjaro**
+
+### macOS 和 Windows 用户
+
+本工具专为 **Linux 服务器生产环境部署**设计，包括 Nginx、Tailscale 和 systemd。
+
+**如需在 macOS 或 Windows（开发环境）安装**，请使用 OpenClaw 官方安装器：
+
+- **macOS**:
+  ```bash
+  curl -fsSL https://openclaw.ai/install.sh | bash
+  ```
+
+- **Windows**:
+  ```powershell
+  iwr -useb https://openclaw.ai/install.ps1 | iex
+  ```
+
+- **Windows (WSL2)**: 可以在 WSL2 的 Ubuntu/Debian 中使用本工具
+
+更多信息请参考[官方安装指南](https://docs.openclaw.ai/zh-CN/install)。
+
+## 📦 本工具的功能
+
+## 📦 本工具的功能
+
 **这就是全部！** 部署脚本会：
 - ✅ 检查网络连接
 - ✅ 安装所有依赖（包括 jq、nginx 等）
@@ -38,7 +77,13 @@ bash openclaw-deploy.sh
 - ✅ 创建 systemd 服务实现自动启动
 - ✅ 验证所有功能正常
 
-## 📦 包含内容
+**这是完整的生产环境部署**，不仅仅是安装器。包括：
+- Nginx 反向代理配置
+- Tailscale 网络设置
+- systemd 服务管理
+- 安全配置（Token 认证、来源白名单）
+
+## 📁 包含内容
 
 - **openclaw-deploy.sh** - 一键部署脚本（你只需要这个！）
 - **openclaw-troubleshoot.sh** - 诊断和故障排查工具
