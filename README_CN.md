@@ -117,6 +117,7 @@ sudo bash openclaw-deploy.sh
 ### 卸载脚本
 - **docker-uninstall.sh** - Docker 卸载脚本
 - **openclaw-uninstall.sh** - 原生卸载脚本（Linux/macOS）
+- **windows-uninstall.ps1** - Windows WSL2 卸载脚本（PowerShell）
 
 ### 配置文件
 - **nginx.conf** - Nginx 反向代理配置
@@ -201,6 +202,17 @@ bash openclaw-uninstall.sh
 # - 卸载 OpenClaw Gateway
 # - 可选删除配置/数据
 # - 可选卸载依赖软件
+```
+
+**Windows (WSL2):**
+```powershell
+# 在 PowerShell 中
+.\windows-uninstall.ps1
+
+# 脚本会执行：
+# - 在 WSL2 Ubuntu 中卸载 OpenClaw
+# - 可选删除配置/数据
+# - 可选卸载 WSL2 和 Ubuntu
 ```
 
 ## 📞 获取帮助

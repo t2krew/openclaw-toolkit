@@ -117,6 +117,7 @@ For detailed Windows instructions, see [WINDOWS_WSL2_GUIDE.md](WINDOWS_WSL2_GUID
 ### Uninstall Scripts
 - **docker-uninstall.sh** - Docker uninstall script
 - **openclaw-uninstall.sh** - Native uninstall script (Linux/macOS)
+- **windows-uninstall.ps1** - Windows WSL2 uninstall script (PowerShell)
 
 ### Configuration Files
 - **nginx.conf** - Nginx reverse proxy configuration
@@ -201,6 +202,17 @@ bash openclaw-uninstall.sh
 # - Uninstall OpenClaw Gateway
 # - Optionally remove config/data
 # - Optionally uninstall dependencies
+```
+
+**Windows (WSL2):**
+```powershell
+# In PowerShell
+.\windows-uninstall.ps1
+
+# The script will:
+# - Uninstall OpenClaw in WSL2 Ubuntu
+# - Optionally remove config/data
+# - Optionally uninstall WSL2 and Ubuntu
 ```
 
 ## 📞 Support
